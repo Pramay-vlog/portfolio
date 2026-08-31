@@ -2,16 +2,21 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const experiments: CollectionEntry<"experiments">[] = await getCollection("experiments");
+const experiments: CollectionEntry<"experiments">[] =
+  await getCollection("experiments");
 const failures: CollectionEntry<"failures">[] = await getCollection("failures");
 
-const completedCount = experiments.filter((e) => e.data.status === "COMPLETE").length;
-const testingCount = experiments.filter((e) => e.data.status === "TESTING").length;
+const completedCount = experiments.filter(
+  (e) => e.data.status === "COMPLETE",
+).length;
+const testingCount = experiments.filter(
+  (e) => e.data.status === "TESTING",
+).length;
 const failedCount = failures.length;
 ---
 
 <BaseLayout
-  title="AI LABORATORY // Empirical Research & Failures — PRAMAY USADADIYA"
+  title="AI LABORATORY // Empirical Research & Failures — PRAMAY USDADIYA"
   description="Empirical AI engineering laboratory: experiments, hypothesis validation, and failure post-mortems ('Failure is Data')."
   activeNav="LAB"
 >
@@ -19,10 +24,13 @@ const failedCount = failures.length;
     <div class="lab-page-inner">
       <!-- Lab Hero Header -->
       <div class="lab-hero-block">
-        <div class="hero-tag">// AUTONOMOUS SYSTEMS &amp; EMPIRICAL RESEARCH</div>
+        <div class="hero-tag">
+          // AUTONOMOUS SYSTEMS &amp; EMPIRICAL RESEARCH
+        </div>
         <h1 class="hero-title">AI LABORATORY</h1>
         <p class="hero-subtext">
-          Evaluating multi-agent reasoning loops, context window limits, schema-constrained tool dispatch, and hybrid RAG retrieval bounds.
+          Evaluating multi-agent reasoning loops, context window limits,
+          schema-constrained tool dispatch, and hybrid RAG retrieval bounds.
         </p>
 
         <!-- Telemetry Bar -->
@@ -45,13 +53,15 @@ const failedCount = failures.length;
       <!-- SECTION 01: EXPERIMENTS -->
       <section class="lab-section">
         <div class="section-title-bar">
-          <h2 class="section-heading">// 01. EXPERIMENTS &amp; HYPOTHESIS TESTING</h2>
+          <h2 class="section-heading">
+            // 01. EXPERIMENTS &amp; HYPOTHESIS TESTING
+          </h2>
         </div>
 
         <div class="experiments-grid">
           {
             experiments.map((exp, idx) => {
-              const expNum = String(idx + 1).padStart(3, '0');
+              const expNum = String(idx + 1).padStart(3, "0");
               const data = exp.data;
               const slug = exp.id;
 
@@ -101,7 +111,9 @@ const failedCount = failures.length;
       <!-- SECTION 02: FAILURES ARCHIVE ("FAILURE IS DATA") -->
       <section class="lab-section">
         <div class="section-title-bar">
-          <h2 class="section-heading danger-heading">// 02. INCIDENT &amp; FAILURES ARCHIVE ("FAILURE IS DATA")</h2>
+          <h2 class="section-heading danger-heading">
+            // 02. INCIDENT &amp; FAILURES ARCHIVE ("FAILURE IS DATA")
+          </h2>
         </div>
 
         <div class="failures-grid">
@@ -113,7 +125,9 @@ const failedCount = failures.length;
               return (
                 <article class="failure-card brutalist-box warning-box">
                   <div class="card-top-bar">
-                    <span class="danger-text font-mono font-bold">// INCIDENT REPORT</span>
+                    <span class="danger-text font-mono font-bold">
+                      // INCIDENT REPORT
+                    </span>
                     <span class="status-pill danger-pill">{data.status}</span>
                   </div>
 
@@ -130,12 +144,17 @@ const failedCount = failures.length;
                   </div>
 
                   <div class="card-block lesson-block">
-                    <span class="block-label accent-text">// ENGINEERING LESSON</span>
+                    <span class="block-label accent-text">
+                      // ENGINEERING LESSON
+                    </span>
                     <p class="block-text">{data.lesson}</p>
                   </div>
 
                   <div class="card-action">
-                    <a href={`/failures/${slug}`} class="brutalist-button link-btn">
+                    <a
+                      href={`/failures/${slug}`}
+                      class="brutalist-button link-btn"
+                    >
                       [ VIEW INCIDENT DOSSIER &rarr; ]
                     </a>
                   </div>
@@ -168,12 +187,15 @@ const failedCount = failures.length;
         stagger: 0.08,
         ease: "power2.out",
         clearProps: "all",
-      }
+      },
     );
   };
 
   document.addEventListener("astro:page-load", initLabAnimations);
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  if (
+    document.readyState === "complete" ||
+    document.readyState === "interactive"
+  ) {
     initLabAnimations();
   }
 </script>
@@ -248,9 +270,15 @@ const failedCount = failures.length;
     margin-top: 0.25rem;
   }
 
-  .text-accent { color: var(--color-accent-primary); }
-  .text-warning { color: var(--color-semantic-warning); }
-  .text-danger { color: var(--color-semantic-danger); }
+  .text-accent {
+    color: var(--color-accent-primary);
+  }
+  .text-warning {
+    color: var(--color-semantic-warning);
+  }
+  .text-danger {
+    color: var(--color-semantic-danger);
+  }
 
   .lab-section {
     display: flex;
@@ -275,13 +303,15 @@ const failedCount = failures.length;
     color: var(--color-semantic-danger);
   }
 
-  .experiments-grid, .failures-grid {
+  .experiments-grid,
+  .failures-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
     gap: var(--space-6);
   }
 
-  .exp-card, .failure-card {
+  .exp-card,
+  .failure-card {
     background-color: var(--color-bg-secondary);
     border: 1px solid var(--border-color-strong);
     padding: var(--space-6);
@@ -351,8 +381,14 @@ const failedCount = failures.length;
     letter-spacing: 0.08em;
   }
 
-  .danger-text { color: #dc2626; font-weight: 700; }
-  .accent-text { color: var(--color-accent-primary); font-weight: 700; }
+  .danger-text {
+    color: #dc2626;
+    font-weight: 700;
+  }
+  .accent-text {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+  }
 
   .block-text {
     font-size: var(--font-size-sm);
@@ -415,12 +451,14 @@ const failedCount = failures.length;
       gap: var(--space-6);
     }
 
-    .experiments-grid, .failures-grid {
+    .experiments-grid,
+    .failures-grid {
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: var(--space-4);
     }
 
-    .exp-card, .failure-card {
+    .exp-card,
+    .failure-card {
       padding: var(--space-4);
     }
 

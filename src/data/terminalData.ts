@@ -45,7 +45,7 @@ export const SYSTEM_SKILLS_DATA = [
 ];
 
 export const SYSTEM_CONTACT_DATA = {
-  subject: 'PRAMAY USADADIYA',
+  subject: 'PRAMAY USDADIYA',
   role: 'AI SOFTWARE ENGINEER (5 YEARS EXPERTISE)',
   status: 'ACTIVE',
   github: 'https://github.com/upramay',

@@ -1,9 +1,12 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-const experienceEntries: CollectionEntry<'experience'>[] = await getCollection('experience');
-const sortedEntries = experienceEntries.sort((a, b) => a.data.level.localeCompare(b.data.level));
+const experienceEntries: CollectionEntry<"experience">[] =
+  await getCollection("experience");
+const sortedEntries = experienceEntries.sort((a, b) =>
+  a.data.level.localeCompare(b.data.level),
+);
 ---
 
 <BaseLayout
@@ -16,7 +19,7 @@ const sortedEntries = experienceEntries.sort((a, b) => a.data.level.localeCompar
       <!-- 01. Identity Block -->
       <section class="identity-section brutalist-box">
         <div class="section-tag">01 // IDENTITY</div>
-        <h1 class="identity-name">PRAMAY USADADIYA</h1>
+        <h1 class="identity-name">PRAMAY USDADIYA</h1>
         <div class="role-pill-row">
           <span class="role-pill">AI SOFTWARE ENGINEER (5 YEARS EXP)</span>
           <span class="role-pill">RAG &amp; AI AGENT ARCHITECT</span>
@@ -25,25 +28,36 @@ const sortedEntries = experienceEntries.sort((a, b) => a.data.level.localeCompar
 
         <div class="profile-summary-box brutalist-box">
           <p class="profile-summary-text">
-            An AI Engineer (full-stack AI engineer) working on software engineering projects for 5 years now. Building AI applications that are good enough to be used by real people. I do this by leveraging LLMs alongside Retrieval-Augmented Generation (RAG) and autonomous AI agents, supported by modern frontend frameworks and cloud-native backend microservices.
+            An AI Engineer (full-stack AI engineer) working on software
+            engineering projects for 5 years now. Building AI applications that
+            are good enough to be used by real people. I do this by leveraging
+            LLMs alongside Retrieval-Augmented Generation (RAG) and autonomous
+            AI agents, supported by modern frontend frameworks and cloud-native
+            backend microservices.
           </p>
         </div>
 
         <div class="concise-statements-grid">
           <div class="statement-card">
             <span class="statement-num">01</span>
-            <p class="statement-text">5 years of hands-on software engineering &amp; production AI development.</p>
+            <p class="statement-text">
+              5 years of hands-on software engineering &amp; production AI
+              development.
+            </p>
           </div>
           <div class="statement-card">
             <span class="statement-num">02</span>
             <p class="statement-text">
-              Specializing in LangGraph AI agents, vector retrieval (Qdrant, Redis, Pinecone), and FastAPI/Node.js microservices.
+              Specializing in LangGraph AI agents, vector retrieval (Qdrant,
+              Redis, Pinecone), and FastAPI/Node.js microservices.
             </p>
           </div>
           <div class="statement-card">
             <span class="statement-num">03</span>
             <p class="statement-text">
-              Proven track record across healthcare AI (Juno Health), retail SaaS (Bacancy), and high-throughput security &amp; APIs (LogWinTech).
+              Proven track record across healthcare AI (Juno Health), retail
+              SaaS (Bacancy), and high-throughput security &amp; APIs
+              (LogWinTech).
             </p>
           </div>
         </div>
@@ -52,14 +66,19 @@ const sortedEntries = experienceEntries.sort((a, b) => a.data.level.localeCompar
       <!-- 02. Capability Systems Matrix -->
       <section class="skills-section">
         <div class="section-title-bar">
-          <h2 class="section-heading">02 // TECHNICAL SKILLS &amp; CAPABILITIES</h2>
+          <h2 class="section-heading">
+            02 // TECHNICAL SKILLS &amp; CAPABILITIES
+          </h2>
         </div>
 
         <div class="skills-clusters-grid">
           <div class="cluster-card brutalist-box">
             <span class="cluster-tag">CLUSTER 01</span>
             <h3 class="cluster-title">BACKEND &amp; INFRASTRUCTURE</h3>
-            <p class="cluster-desc">Scalable microservices, high-throughput TCP engines, database optimization, and caching.</p>
+            <p class="cluster-desc">
+              Scalable microservices, high-throughput TCP engines, database
+              optimization, and caching.
+            </p>
             <div class="tech-list">
               <span class="tech-item">Node.js</span>
               <span class="tech-item">Python</span>
@@ -73,14 +92,21 @@ const sortedEntries = experienceEntries.sort((a, b) => a.data.level.localeCompar
 
           <div class="cluster-card brutalist-box highlight-cluster">
             <span class="cluster-tag accent-text">CLUSTER 02</span>
-            <h3 class="cluster-title accent-text">AI, RAG &amp; AGENTIC SYSTEMS</h3>
-            <p class="cluster-desc">LangGraph agent loops, schema-constrained function calling, and hybrid vector RAG pipelines.</p>
+            <h3 class="cluster-title accent-text">
+              AI, RAG &amp; AGENTIC SYSTEMS
+            </h3>
+            <p class="cluster-desc">
+              LangGraph agent loops, schema-constrained function calling, and
+              hybrid vector RAG pipelines.
+            </p>
             <div class="tech-list">
               <span class="tech-item">OpenAI / Claude / Gemini / Ollama</span>
               <span class="tech-item">LangChain</span>
               <span class="tech-item">LangGraph</span>
               <span class="tech-item">LlamaIndex</span>
-              <span class="tech-item">Vector DBs (Qdrant, Pinecone, Chroma, FAISS)</span>
+              <span class="tech-item"
+                >Vector DBs (Qdrant, Pinecone, Chroma, FAISS)</span
+              >
               <span class="tech-item">Hybrid Search &amp; Reranking</span>
             </div>
           </div>
@@ -88,7 +114,10 @@ const sortedEntries = experienceEntries.sort((a, b) => a.data.level.localeCompar
           <div class="cluster-card brutalist-box">
             <span class="cluster-tag">CLUSTER 03</span>
             <h3 class="cluster-title">CLOUD, DEVOPS &amp; FRONTEND</h3>
-            <p class="cluster-desc">Containerization, CI/CD automation, cloud deployment, and modern responsive web apps.</p>
+            <p class="cluster-desc">
+              Containerization, CI/CD automation, cloud deployment, and modern
+              responsive web apps.
+            </p>
             <div class="tech-list">
               <span class="tech-item">Docker</span>
               <span class="tech-item">AWS EC2 / S3 / CloudWatch</span>
@@ -123,7 +152,9 @@ const sortedEntries = experienceEntries.sort((a, b) => a.data.level.localeCompar
                   <p class="stage-summary">{data.summary}</p>
 
                   <div class="stage-caps-block">
-                    <span class="caps-heading">KEY RESPONSIBILITIES &amp; IMPACT</span>
+                    <span class="caps-heading">
+                      KEY RESPONSIBILITIES &amp; IMPACT
+                    </span>
                     <ul class="caps-list">
                       {data.capabilities.map((cap) => (
                         <li class="cap-item">
@@ -147,10 +178,14 @@ const sortedEntries = experienceEntries.sort((a, b) => a.data.level.localeCompar
         </div>
         <div class="education-card brutalist-box">
           <div class="edu-header">
-            <span class="edu-degree">BACHELOR'S IN COMPUTER APPLICATIONS (BCA)</span>
+            <span class="edu-degree"
+              >BACHELOR'S IN COMPUTER APPLICATIONS (BCA)</span
+            >
             <span class="edu-period">2019 – 2022</span>
           </div>
-          <p class="edu-institution">Veer Narmad South Gujarat University | Surat, IN</p>
+          <p class="edu-institution">
+            Veer Narmad South Gujarat University | Surat, IN
+          </p>
         </div>
       </section>
     </div>
@@ -158,28 +193,33 @@ const sortedEntries = experienceEntries.sort((a, b) => a.data.level.localeCompar
 </BaseLayout>
 
 <script>
-  import { gsap } from '@/lib/gsap';
+  import { gsap } from "@/lib/gsap";
 
   const initAboutAnimations = () => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (prefersReducedMotion) return;
 
     gsap.fromTo(
-      '.statement-card, .cluster-card, .timeline-stage-card, .education-card',
+      ".statement-card, .cluster-card, .timeline-stage-card, .education-card",
       { y: 20, opacity: 0 },
       {
         y: 0,
         opacity: 1,
         duration: 0.4,
         stagger: 0.08,
-        ease: 'power2.out',
-        clearProps: 'all',
-      }
+        ease: "power2.out",
+        clearProps: "all",
+      },
     );
   };
 
-  document.addEventListener('astro:page-load', initAboutAnimations);
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  document.addEventListener("astro:page-load", initAboutAnimations);
+  if (
+    document.readyState === "complete" ||
+    document.readyState === "interactive"
+  ) {
     initAboutAnimations();
   }
 </script>
@@ -280,7 +320,9 @@ const sortedEntries = experienceEntries.sort((a, b) => a.data.level.localeCompar
     line-height: 1.4;
   }
 
-  .skills-section, .progression-timeline-section, .education-section {
+  .skills-section,
+  .progression-timeline-section,
+  .education-section {
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
@@ -325,7 +367,9 @@ const sortedEntries = experienceEntries.sort((a, b) => a.data.level.localeCompar
     color: var(--color-text-muted);
   }
 
-  .accent-text { color: var(--color-accent-primary); }
+  .accent-text {
+    color: var(--color-accent-primary);
+  }
 
   .cluster-title {
     font-family: var(--font-sans);
@@ -437,8 +481,14 @@ const sortedEntries = experienceEntries.sort((a, b) => a.data.level.localeCompar
     padding-top: var(--space-3);
   }
 
-  .evidence-tag { color: var(--color-text-muted); }
-  .evidence-link { color: var(--color-accent-primary); text-decoration: none; font-weight: 700; }
+  .evidence-tag {
+    color: var(--color-text-muted);
+  }
+  .evidence-link {
+    color: var(--color-accent-primary);
+    text-decoration: none;
+    font-weight: 700;
+  }
 
   .education-card {
     background-color: var(--color-surface-elevated);

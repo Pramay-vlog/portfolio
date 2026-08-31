@@ -2,11 +2,11 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const projects: CollectionEntry<'projects'>[] = await getCollection('projects');
+const projects: CollectionEntry<"projects">[] = await getCollection("projects");
 ---
 
 <BaseLayout
-  title="PROJECT MISSIONS // Engineering Archives — PRAMAY USADADIYA"
+  title="PROJECT MISSIONS // Engineering Archives — PRAMAY USDADIYA"
   description="Declassified operational dossiers for AI engineering projects, clinical RAG systems, and production agent orchestrations."
   activeNav="WORK"
 >
@@ -17,7 +17,8 @@ const projects: CollectionEntry<'projects'>[] = await getCollection('projects');
         <div class="hero-tag">// FIELD OPERATIONS ARCHIVE</div>
         <h1 class="hero-title">ENGINEERING MISSIONS</h1>
         <p class="hero-subtext">
-          Operational dossiers documenting production AI systems, 2D topology blueprints, architectural trade-offs, and incident post-mortems.
+          Operational dossiers documenting production AI systems, 2D topology
+          blueprints, architectural trade-offs, and incident post-mortems.
         </p>
       </div>
 
@@ -25,7 +26,7 @@ const projects: CollectionEntry<'projects'>[] = await getCollection('projects');
       <div class="missions-grid">
         {
           projects.map((project, idx) => {
-            const missionNum = String(idx + 1).padStart(3, '0');
+            const missionNum = String(idx + 1).padStart(3, "0");
             const data = project.data;
             const slug = project.id;
 
@@ -54,7 +55,10 @@ const projects: CollectionEntry<'projects'>[] = await getCollection('projects');
                 </div>
 
                 <div class="card-action">
-                  <a href={`/projects/${slug}`} class="brutalist-button view-btn">
+                  <a
+                    href={`/projects/${slug}`}
+                    class="brutalist-button view-btn"
+                  >
                     [ OPEN MISSION DOSSIER &rarr; ]
                   </a>
                 </div>
@@ -86,12 +90,15 @@ const projects: CollectionEntry<'projects'>[] = await getCollection('projects');
         stagger: 0.08,
         ease: "power2.out",
         clearProps: "all",
-      }
+      },
     );
   };
 
   document.addEventListener("astro:page-load", initMissionAnimations);
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  if (
+    document.readyState === "complete" ||
+    document.readyState === "interactive"
+  ) {
     initMissionAnimations();
   }
 </script>

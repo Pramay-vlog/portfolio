@@ -278,7 +278,7 @@ export default function OSTerminalIsland({
         outputNode = (
           <div className="term-output-block">
             <div className="term-output-head">// ENGINEERING PROFILE DOSSIER</div>
-            <div>SUBJECT: PRAMAY USADADIYA</div>
+            <div>SUBJECT: PRAMAY USDADIYA</div>
             <div>ROLE: AI SOFTWARE ENGINEER (5 YEARS EXPERIENCE)</div>
             <div>SUMMARY: Full-stack AI Engineer building RAG architectures, AI agents, microservices, and cloud systems.</div>
             <div>EDUCATION: Bachelor's in Computer Applications (BCA), Veer Narmad South Gujarat University (2019 – 2022)</div>

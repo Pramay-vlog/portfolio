@@ -1,17 +1,17 @@
 ---
-import { getCollection, render, type CollectionEntry } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
-  const experiments = await getCollection('experiments');
-  return experiments.map((experiment: CollectionEntry<'experiments'>) => ({
+  const experiments = await getCollection("experiments");
+  return experiments.map((experiment: CollectionEntry<"experiments">) => ({
     params: { id: experiment.id },
     props: { experiment },
   }));
 }
 
 type Props = {
-  experiment: CollectionEntry<'experiments'>;
+  experiment: CollectionEntry<"experiments">;
 };
 
 const { experiment } = Astro.props as Props;
@@ -20,7 +20,7 @@ const { Content } = await render(experiment);
 ---
 
 <BaseLayout
-  title={`${data.title} // AI Lab Record — PRAMAY USADADIYA`}
+  title={`${data.title} // AI Lab Record — PRAMAY USDADIYA`}
   description={data.hypothesis}
   activeNav="LAB"
 >
@@ -64,7 +64,9 @@ const { Content } = await render(experiment);
           {
             data.whatBroke && (
               <section class="record-section brutalist-box warning-box">
-                <h3 class="section-title warning-title">// 04. WHAT BROKE / FAILURE MODE</h3>
+                <h3 class="section-title warning-title">
+                  // 04. WHAT BROKE / FAILURE MODE
+                </h3>
                 <p class="section-text danger-text">{data.whatBroke}</p>
               </section>
             )
@@ -95,7 +97,9 @@ const { Content } = await render(experiment);
           }
 
           <div class="sidebar-block">
-            <a href="/lab" class="brutalist-button back-btn">&larr; BACK TO LAB INDEX</a>
+            <a href="/lab" class="brutalist-button back-btn"
+              >&larr; BACK TO LAB INDEX</a
+            >
           </div>
         </aside>
       </div>
@@ -104,15 +108,15 @@ const { Content } = await render(experiment);
 </BaseLayout>
 
 <script>
-  import { trackEvent } from '@/lib/analytics';
+  import { trackEvent } from "@/lib/analytics";
   const track = () => {
     const path = window.location.pathname;
-    const parts = path.split('/');
-    const expId = parts[parts.length - 1] || 'unknown';
-    trackEvent('experiment_opened', { experimentId: expId });
+    const parts = path.split("/");
+    const expId = parts[parts.length - 1] || "unknown";
+    trackEvent("experiment_opened", { experimentId: expId });
   };
-  document.addEventListener('DOMContentLoaded', track);
-  document.addEventListener('astro:page-load', track);
+  document.addEventListener("DOMContentLoaded", track);
+  document.addEventListener("astro:page-load", track);
 </script>
 
 <style>
@@ -202,7 +206,9 @@ const { Content } = await render(experiment);
       padding: var(--space-6) var(--space-4) var(--space-12);
     }
 
-    .record-header, .record-section, .record-sidebar {
+    .record-header,
+    .record-section,
+    .record-sidebar {
       padding: var(--space-4);
     }
   }

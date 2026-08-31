@@ -1,12 +1,12 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import FailureCard from '../components/failures/FailureCard.astro';
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FailureCard from "../components/failures/FailureCard.astro";
 
-const failures: CollectionEntry<'failures'>[] = await getCollection('failures');
+const failures: CollectionEntry<"failures">[] = await getCollection("failures");
 ---
 
-<BaseLayout title="FAILURES // Post-Mortems — PRAMAY USADADIYA" activeNav="LAB">
+<BaseLayout title="FAILURES // Post-Mortems — PRAMAY USDADIYA" activeNav="LAB">
   <main class="failures-page-container">
     <div class="failures-page-inner">
       <!-- Failures Hero Header featuring "FAILURE IS DATA." -->
@@ -14,46 +14,59 @@ const failures: CollectionEntry<'failures'>[] = await getCollection('failures');
         <div class="hero-tag">ENGINEERING INCIDENT LOGS // POST-MORTEMS</div>
         <h1 class="hero-title">&quot;FAILURE IS DATA.&quot;</h1>
         <p class="hero-subtext">
-          First-class incident post-mortems. We document real-world system failures, root cause metrics, corrective actions, and systemic engineering takeaways.
+          First-class incident post-mortems. We document real-world system
+          failures, root cause metrics, corrective actions, and systemic
+          engineering takeaways.
         </p>
 
         <div class="motto-banner">
           <span class="motto-badge">PRINCIPLE: PROD SURVIVAL</span>
-          <span class="motto-text">FAILURES ARE EVIDENCE OF SYSTEM BOUNDARY DISCOVERY.</span>
+          <span class="motto-text"
+            >FAILURES ARE EVIDENCE OF SYSTEM BOUNDARY DISCOVERY.</span
+          >
         </div>
       </div>
 
       <!-- Failures Grid -->
       <div class="failures-grid">
-        {failures.map((failure, idx) => <FailureCard failure={failure} index={idx} />)}
+        {
+          failures.map((failure, idx) => (
+            <FailureCard failure={failure} index={idx} />
+          ))
+        }
       </div>
     </div>
   </main>
 </BaseLayout>
 
 <script>
-  import { gsap } from '@/lib/gsap';
+  import { gsap } from "@/lib/gsap";
 
   const initFailureAnimations = () => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (prefersReducedMotion) return;
 
     gsap.fromTo(
-      '.failure-card',
+      ".failure-card",
       { y: 20, opacity: 0 },
       {
         y: 0,
         opacity: 1,
         duration: 0.4,
         stagger: 0.08,
-        ease: 'power2.out',
-        clearProps: 'all',
-      }
+        ease: "power2.out",
+        clearProps: "all",
+      },
     );
   };
 
-  document.addEventListener('astro:page-load', initFailureAnimations);
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  document.addEventListener("astro:page-load", initFailureAnimations);
+  if (
+    document.readyState === "complete" ||
+    document.readyState === "interactive"
+  ) {
     initFailureAnimations();
   }
 </script>

@@ -1,20 +1,20 @@
 ---
-import { getCollection, render, type CollectionEntry } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import MissionHeader from '../../components/projects/MissionHeader.astro';
-import MissionArchitectureVisualizer from '../../components/projects/MissionArchitectureVisualizer.astro';
-import MissionSidebar from '../../components/projects/MissionSidebar.astro';
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MissionHeader from "../../components/projects/MissionHeader.astro";
+import MissionArchitectureVisualizer from "../../components/projects/MissionArchitectureVisualizer.astro";
+import MissionSidebar from "../../components/projects/MissionSidebar.astro";
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
-  return projects.map((project: CollectionEntry<'projects'>) => ({
+  const projects = await getCollection("projects");
+  return projects.map((project: CollectionEntry<"projects">) => ({
     params: { id: project.id },
     props: { project },
   }));
 }
 
 type Props = {
-  project: CollectionEntry<'projects'>;
+  project: CollectionEntry<"projects">;
 };
 
 const { project } = Astro.props as Props;
@@ -23,7 +23,7 @@ const { Content } = await render(project);
 ---
 
 <BaseLayout
-  title={`${data.title} // Mission Dossier — PRAMAY USADADIYA`}
+  title={`${data.title} // Mission Dossier — PRAMAY USDADIYA`}
   description={data.objective}
   activeNav="WORK"
 >
@@ -70,7 +70,9 @@ const { Content } = await render(project);
 
           <!-- 05. Challenges & Failures -->
           <section class="dossier-section brutalist-box warning-box">
-            <h3 class="section-title warning-title">// 05. CHALLENGES &amp; INCIDENT LOGS</h3>
+            <h3 class="section-title warning-title">
+              // 05. CHALLENGES &amp; INCIDENT LOGS
+            </h3>
             <div class="challenges-sub">
               <h4 class="sub-label">// OPERATIONAL CHALLENGES:</h4>
               <ul class="dossier-list">
@@ -80,9 +82,13 @@ const { Content } = await render(project);
             {
               data.failures && data.failures.length > 0 && (
                 <div class="failures-sub">
-                  <h4 class="sub-label danger-text">// INCIDENTS / FAILURES LOGGED:</h4>
+                  <h4 class="sub-label danger-text">
+                    // INCIDENTS / FAILURES LOGGED:
+                  </h4>
                   <ul class="dossier-list danger-text">
-                    {data.failures.map((fl: string) => <li>&bull; {fl}</li>)}
+                    {data.failures.map((fl: string) => (
+                      <li>&bull; {fl}</li>
+                    ))}
                   </ul>
                 </div>
               )
@@ -92,7 +98,10 @@ const { Content } = await render(project);
           <!-- 06. Results & Lessons -->
           <section class="dossier-section brutalist-box">
             <h3 class="section-title">// 06. RESULTS &amp; LESSONS LEARNED</h3>
-            <p class="section-text"><strong>DELIVERED RESULT:</strong> {data.results}</p>
+            <p class="section-text">
+              <strong>DELIVERED RESULT:</strong>
+              {data.results}
+            </p>
             <div class="lessons-wrap">
               <h4 class="sub-label">// KEY ENGINEERING LESSONS:</h4>
               <ul class="dossier-list">
@@ -110,15 +119,15 @@ const { Content } = await render(project);
 </BaseLayout>
 
 <script>
-  import { trackEvent } from '@/lib/analytics';
+  import { trackEvent } from "@/lib/analytics";
   const track = () => {
     const path = window.location.pathname;
-    const parts = path.split('/');
-    const pId = parts[parts.length - 1] || 'unknown';
-    trackEvent('project_opened', { projectId: pId });
+    const parts = path.split("/");
+    const pId = parts[parts.length - 1] || "unknown";
+    trackEvent("project_opened", { projectId: pId });
   };
-  document.addEventListener('DOMContentLoaded', track);
-  document.addEventListener('astro:page-load', track);
+  document.addEventListener("DOMContentLoaded", track);
+  document.addEventListener("astro:page-load", track);
 </script>
 
 <style>
