@@ -36,6 +36,15 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <ClientRouter />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6FH4TV29TH"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-6FH4TV29TH');
+    </script>
 
     <!-- Reusable Production SEO Component -->
     <SEO title={title} description={description} image={image} canonicalURL={canonicalURL} />
