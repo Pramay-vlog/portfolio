@@ -1,0 +1,299 @@
+---
+import { getCollection } from 'astro:content';
+
+const experienceEntries = await getCollection('experience');
+const sortedExperience = experienceEntries.sort((a, b) => a.data.level.localeCompare(b.data.level));
+---
+
+<section class="scene-progression" id="scene-progression">
+  <div class="progression-inner">
+    <div class="progression-header">
+      <div class="scene-tag">07 // CAREER EVOLUTION</div>
+      <h2 class="progression-title">ENGINEERING PROGRESSION TREE</h2>
+      <p class="progression-subtitle">
+        Systematic capability progression across software engineering tiers. Each stage unlocks deeper architectural complexity and system autonomy.
+      </p>
+    </div>
+
+    <!-- Horizontal / Vertical Evolution Stepper -->
+    <div class="progression-tree-container">
+      {
+        sortedExperience.map((exp, idx) => {
+          const data = exp.data;
+          const isCurrent = idx === sortedExperience.length - 1;
+
+          return (
+            <div class={`progression-step-card brutalist-box ${isCurrent ? 'is-current' : ''}`}>
+              <div class="step-header">
+                <span class="step-level-tag">{data.level}</span>
+                <span class="step-status">{isCurrent ? 'CURRENT LEVEL' : 'UNLOCKED'}</span>
+              </div>
+
+              <h3 class="step-title">{data.title}</h3>
+              <p class="step-summary">{data.summary}</p>
+
+              <div class="capabilities-list-block">
+                <span class="cap-label">UNLOCKED CAPABILITIES</span>
+                <ul class="cap-list">
+                  {data.capabilities.map((cap) => (
+                    <li class="cap-item">
+                      <span class="cap-check">&check;</span>
+                      <span class="cap-text">{cap}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {data.evidenceProject && (
+                <div class="step-evidence">
+                  <span class="evidence-tag">EVIDENCE:</span>
+                  <a href={`/work/${data.evidenceProject}`} class="evidence-link">
+                    {data.evidenceProjectName || data.evidenceProject.toUpperCase()} &rarr;
+                  </a>
+                </div>
+              )}
+            </div>
+          );
+        })
+      }
+    </div>
+
+    <!-- Current Level Objective Banner -->
+    <div class="current-objective-banner brutalist-box-accent">
+      <div class="objective-label">CURRENT OBJECTIVE // AGENT REASONING</div>
+      <div class="objective-statement">BUILD SYSTEMS THAT CAN REASON.</div>
+      <p class="objective-desc">
+        Investigating autonomous multi-agent tool execution budgets, long-term episodic vector memory, and self-correcting agent runtimes.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap, ScrollTrigger } from '@/lib/gsap';
+
+  const initProgressionScrollAnimation = () => {
+    const section = document.getElementById('scene-progression');
+    if (!section) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const steps = section.querySelectorAll('.progression-step-card');
+    if (!steps || steps.length === 0) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(
+      steps,
+      { opacity: 0, x: -30 },
+      {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 75%',
+          end: 'top 25%',
+          scrub: 0.8,
+        },
+        opacity: 1,
+        x: 0,
+        stagger: 0.2,
+        ease: 'power2.out',
+      }
+    );
+  };
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initProgressionScrollAnimation();
+  }
+  document.addEventListener('DOMContentLoaded', initProgressionScrollAnimation);
+  document.addEventListener('astro:page-load', initProgressionScrollAnimation);
+</script>
+
+<style>
+  .scene-progression {
+    padding: var(--space-16) var(--space-6);
+    background-color: var(--color-bg-primary);
+    border-bottom: 1px solid var(--border-color-subtle);
+  }
+
+  .progression-inner {
+    max-width: var(--max-width-site);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .progression-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .scene-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+
+  .progression-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--color-text-primary);
+  }
+
+  .progression-subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    color: var(--color-text-secondary);
+    max-width: 800px;
+  }
+
+  .progression-tree-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+    position: relative;
+  }
+
+  .progression-step-card {
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--border-color-subtle);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .progression-step-card.is-current {
+    border-color: var(--color-accent-primary);
+    box-shadow: var(--shadow-hard-accent);
+  }
+
+  .step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color-subtle);
+    padding-bottom: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+  }
+
+  .step-level-tag {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+  }
+
+  .step-status {
+    color: var(--color-text-muted);
+    font-size: 0.65rem;
+  }
+
+  .progression-step-card.is-current .step-status {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+  }
+
+  .step-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-xl);
+    font-weight: 900;
+    color: var(--color-text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .step-summary {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .capabilities-list-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .cap-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .cap-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .cap-item {
+    display: flex;
+    gap: var(--space-2);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-primary);
+    font-family: var(--font-mono);
+  }
+
+  .cap-check {
+    color: var(--color-accent-primary);
+  }
+
+  .step-evidence {
+    margin-top: auto;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border-color-subtle);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .evidence-tag {
+    color: var(--color-text-muted);
+  }
+
+  .evidence-link {
+    color: var(--color-accent-primary);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .current-objective-banner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    margin-top: var(--space-4);
+    background-color: var(--color-surface-elevated);
+    border: var(--border-accent);
+    box-shadow: var(--shadow-hard-accent);
+  }
+
+  .objective-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+
+  .objective-statement {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-2xl);
+    font-weight: 900;
+    color: var(--color-text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .objective-desc {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+</style>

@@ -1,0 +1,297 @@
+---
+import { getCollection } from 'astro:content';
+
+const experiments = await getCollection('experiments');
+---
+
+<section class="scene-experiments" id="scene-experiments">
+  <div class="experiments-inner">
+    <div class="experiments-header">
+      <div class="scene-tag">06 // EXPERIMENTAL RECORDS</div>
+      <h2 class="experiments-title">HYPOTHESIS, EXPERIMENTS &amp; FAILURE DATA</h2>
+      <p class="experiments-subtitle">
+        Real AI engineering requires systematic experimentation. Here is what was tested, what failed, and what was learned at the frontier.
+      </p>
+    </div>
+
+    <!-- Experiments Matrix Deck -->
+    <div class="experiments-grid">
+      {
+        experiments.map((exp, idx) => {
+          const expNum = String(idx + 1).padStart(2, '0');
+          const data = exp.data;
+          const slug = exp.id;
+
+          return (
+            <article class="exp-card brutalist-box">
+              <div class="exp-top-bar">
+                <span class="exp-num">EXP {expNum}</span>
+                <span class="exp-status-pill">{data.status}</span>
+              </div>
+
+              <h3 class="exp-title">{data.title}</h3>
+
+              <div class="exp-block">
+                <span class="exp-block-label">HYPOTHESIS</span>
+                <p class="exp-block-text">{data.hypothesis}</p>
+              </div>
+
+              <div class="exp-block">
+                <span class="exp-block-label">METHOD &amp; RESULT</span>
+                <p class="exp-block-text">{data.result}</p>
+              </div>
+
+              {data.whatBroke && (
+                <div class="exp-block broke-block">
+                  <span class="exp-block-label danger-text">WHAT BROKE</span>
+                  <p class="exp-block-text">{data.whatBroke}</p>
+                </div>
+              )}
+
+              <div class="exp-block lesson-block">
+                <span class="exp-block-label accent-text">LESSON LEARNED</span>
+                <p class="exp-block-text">{data.whatILearned}</p>
+              </div>
+
+              <div class="exp-action-row">
+                <a href={`/lab/${slug}`} class="exp-link">
+                  READ FULL EXPERIMENT RECORD &rarr;
+                </a>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+
+    <div class="exp-footer-link-row">
+      <a href="/lab" class="brutalist-button lab-index-btn">
+        VIEW COMPLETE AI LAB ARCHIVE &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap, ScrollTrigger } from '@/lib/gsap';
+
+  const initExpScrollAnimation = () => {
+    const section = document.getElementById('scene-experiments');
+    if (!section) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const cards = section.querySelectorAll('.exp-card');
+    if (!cards || cards.length === 0) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(
+      cards,
+      { opacity: 0, y: 30 },
+      {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          end: 'top 30%',
+          scrub: 0.6,
+        },
+        opacity: 1,
+        y: 0,
+        stagger: 0.15,
+        ease: 'power2.out',
+      }
+    );
+  };
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initExpScrollAnimation();
+  }
+  document.addEventListener('DOMContentLoaded', initExpScrollAnimation);
+  document.addEventListener('astro:page-load', initExpScrollAnimation);
+</script>
+
+<style>
+  .scene-experiments {
+    padding: var(--space-16) var(--space-6);
+    background-color: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--border-color-subtle);
+  }
+
+  .experiments-inner {
+    max-width: var(--max-width-site);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .experiments-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .scene-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+
+  .experiments-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--color-text-primary);
+  }
+
+  .experiments-subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    color: var(--color-text-secondary);
+    max-width: 800px;
+  }
+
+  .experiments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .exp-card {
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--border-color-subtle);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .exp-card:hover {
+    border-color: var(--color-accent-primary);
+  }
+
+  .exp-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color-subtle);
+    padding-bottom: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+  }
+
+  .exp-num {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+  }
+
+  .exp-status-pill {
+    color: var(--color-semantic-success);
+    border: 1px solid var(--color-semantic-success);
+    padding: 0.1rem 0.5rem;
+    font-weight: 700;
+    font-size: 0.65rem;
+  }
+
+  .exp-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-xl);
+    font-weight: 900;
+    color: var(--color-text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .exp-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .exp-block-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .exp-block-label.danger-text {
+    color: #dc2626;
+    font-weight: 700;
+  }
+
+  .exp-block-label.accent-text {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+  }
+
+  .exp-block-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    line-height: 1.5;
+  }
+
+  .broke-block {
+    background-color: rgba(220, 38, 38, 0.06);
+    padding: var(--space-3);
+    border-left: 3px solid #dc2626;
+    border-top: 1px solid rgba(220, 38, 38, 0.2);
+    border-right: 1px solid rgba(220, 38, 38, 0.2);
+    border-bottom: 1px solid rgba(220, 38, 38, 0.2);
+  }
+
+  .lesson-block {
+    background-color: var(--color-accent-dim);
+    padding: var(--space-3);
+    border-left: 3px solid var(--color-accent-primary);
+    border-top: 1px solid var(--color-accent-glow);
+    border-right: 1px solid var(--color-accent-glow);
+    border-bottom: 1px solid var(--color-accent-glow);
+  }
+
+  .exp-action-row {
+    margin-top: auto;
+    padding-top: var(--space-2);
+  }
+
+  .exp-link {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .exp-footer-link-row {
+    margin-top: var(--space-4);
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  @media (max-width: 768px) {
+    .scene-experiments {
+      padding: var(--space-8) var(--space-4);
+    }
+
+    .experiments-inner {
+      gap: var(--space-6);
+    }
+
+    .experiments-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .exp-card {
+      padding: var(--space-4);
+    }
+
+    .lab-index-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

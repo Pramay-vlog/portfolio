@@ -1,0 +1,133 @@
+export interface SystemNode {
+  id: string;
+  label: string;
+  code: string;
+  category: 'CLIENT' | 'GATEWAY' | 'ORCHESTRATOR' | 'SUBSYSTEM' | 'STORAGE';
+  x: number;
+  y: number;
+  tagline: string;
+  whatItDoes: string;
+  whyItExists: string;
+  engineeringProblem: string;
+  targets: string[];
+}
+
+export const SYSTEM_NODES: SystemNode[] = [
+  {
+    id: 'user',
+    label: 'USER / CLIENT INTERFACE',
+    code: 'ND-01',
+    category: 'CLIENT',
+    x: 400,
+    y: 50,
+    tagline: 'Entry point for external user queries and system commands.',
+    whatItDoes: 'Captures visitor intent, user requests, and terminal commands via UI inputs and API callers.',
+    whyItExists: 'Provides an accessible, rate-governed interface between external users and internal software systems.',
+    engineeringProblem: 'Handling unstructured human input, managing client sessions, and enforcing security boundaries at the edge.',
+    targets: ['gateway'],
+  },
+  {
+    id: 'gateway',
+    label: 'API GATEWAY',
+    code: 'ND-02',
+    category: 'GATEWAY',
+    x: 400,
+    y: 150,
+    tagline: 'Edge security, token bucket rate limiting, and request validation.',
+    whatItDoes: 'Authenticates requests, enforces rate limits, validates payload schemas, and routes traffic to internal orchestrators.',
+    whyItExists: 'Protects expensive downstream AI endpoints from denial-of-service, abuse, and malformed payloads.',
+    engineeringProblem: 'Preventing API key exposure, controlling infrastructure costs, and managing spike traffic without adding latency.',
+    targets: ['orchestrator'],
+  },
+  {
+    id: 'orchestrator',
+    label: 'AI ORCHESTRATOR',
+    code: 'ND-03',
+    category: 'ORCHESTRATOR',
+    x: 400,
+    y: 260,
+    tagline: 'Central intent classification, step planner, and workflow dispatcher.',
+    whatItDoes: 'Analyzes query intent, decomposes complex tasks into sub-steps, dispatches retrieval and execution jobs, and synthesizes final responses.',
+    whyItExists: 'Decouples high-level task planning from individual tools, vector indexes, and execution runtimes.',
+    engineeringProblem: 'Managing non-deterministic model planning, handling execution failures gracefully, and preventing infinite agent loops.',
+    targets: ['rag', 'agents', 'tools'],
+  },
+  {
+    id: 'rag',
+    label: 'RAG ENGINE',
+    code: 'ND-04',
+    category: 'SUBSYSTEM',
+    x: 200,
+    y: 380,
+    tagline: 'Hybrid retrieval, sparse/dense search, and re-ranking pipeline.',
+    whatItDoes: 'Retrieves relevant evidence from knowledge bases using semantic embeddings and keyword indexing, re-ranking candidate chunks for optimal prompt context.',
+    whyItExists: 'Grounds AI model responses in verified domain evidence rather than parametric memory hallucinations.',
+    engineeringProblem: 'Context window saturation, chunk chunking granularity, retrieval latency, and noise filtering.',
+    targets: ['database'],
+  },
+  {
+    id: 'agents',
+    label: 'AGENT EXECUTION ENGINE',
+    code: 'ND-05',
+    category: 'SUBSYSTEM',
+    x: 400,
+    y: 380,
+    tagline: 'Autonomous tool loop, memory access, and stateful agent execution.',
+    whatItDoes: 'Runs iterative reasoning loops (ReAct pattern), selects appropriate tools, executes function calls, and evaluates intermediate outcomes.',
+    whyItExists: 'Enables complex multi-step reasoning where a single LLM generation is insufficient.',
+    engineeringProblem: 'Tool selection hallucination, execution timeouts, error recovery, and maintaining state across multi-turn interactions.',
+    targets: ['memory'],
+  },
+  {
+    id: 'tools',
+    label: 'TOOL & API REGISTRY',
+    code: 'ND-06',
+    category: 'SUBSYSTEM',
+    x: 600,
+    y: 380,
+    tagline: 'Sandboxed code execution, web searchers, and API integrations.',
+    whatItDoes: 'Provides typed interfaces for dynamic tool calls, external API queries, math evaluation, and code execution.',
+    whyItExists: 'Extends LLM capabilities to perform real-world actions and fetch dynamic live data.',
+    engineeringProblem: 'Sandboxing untrusted code, input sanitization, handling third-party API downtime, and strict schema validation.',
+    targets: ['external'],
+  },
+  {
+    id: 'database',
+    label: 'VECTOR & RELATIONAL STORE',
+    code: 'ND-07',
+    category: 'STORAGE',
+    x: 200,
+    y: 500,
+    tagline: 'Vector index (HNSW/IVF), relational metadata, and document storage.',
+    whatItDoes: 'Stores high-dimensional document embeddings, structured entity metadata, and raw content collections for retrieval.',
+    whyItExists: 'Serves as the long-term knowledge repository for ground-truth information.',
+    engineeringProblem: 'Index build latency, similarity search query throughput, and maintaining sync between vector indexes and primary database records.',
+    targets: [],
+  },
+  {
+    id: 'memory',
+    label: 'MEMORY & STATE SYSTEM',
+    code: 'ND-08',
+    category: 'STORAGE',
+    x: 400,
+    y: 500,
+    tagline: 'Short-term session memory & long-term episodic memory store.',
+    whatItDoes: 'Persists conversation histories, user preferences, and agent scratchpads across requests.',
+    whyItExists: 'Maintains stateful context across stateless HTTP requests and multi-step agent workflows.',
+    engineeringProblem: 'Context summarization without loss of critical facts, session isolation, and memory eviction strategies.',
+    targets: ['orchestrator'],
+  },
+  {
+    id: 'external',
+    label: 'EXTERNAL APIS & LLMS',
+    code: 'ND-09',
+    category: 'STORAGE',
+    x: 600,
+    y: 500,
+    tagline: 'Third-party foundation models, search engines, and cloud services.',
+    whatItDoes: 'Provides raw inference endpoints, third-party search APIs, and external infrastructure integrations.',
+    whyItExists: 'Delegates compute-intensive LLM inference and web search indexing to specialized cloud infrastructure.',
+    engineeringProblem: 'Provider lock-in, latency bottlenecks, rate limits, and fallback routing during provider outages.',
+    targets: [],
+  },
+];

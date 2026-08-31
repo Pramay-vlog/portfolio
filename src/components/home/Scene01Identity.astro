@@ -1,0 +1,229 @@
+---
+---
+
+<section class="scene-identity" id="scene-identity">
+  <div class="identity-inner">
+    <!-- Meta Tag Signal -->
+    <div class="identity-meta-bar">
+      <span class="meta-tag">01 // IDENTITY</span>
+      <span class="meta-tag">INDIA &bull; REMOTE</span>
+    </div>
+
+    <!-- Massive Display Headline -->
+    <div class="identity-title-block">
+      <h1 class="hero-name">
+        <span class="char-span">P</span>
+        <span class="char-span">R</span>
+        <span class="char-span">A</span>
+        <span class="char-span">M</span>
+        <span class="char-span">A</span>
+        <span class="char-span">Y</span>
+        <span class="dot-span">.</span>
+      </h1>
+      <div class="hero-role-badge">
+        <span class="role-text">AI SOFTWARE ENGINEER</span>
+        <span class="role-divider">—</span>
+        <span class="role-sub">INTELLIGENT SYSTEMS &amp; AGENTS</span>
+      </div>
+    </div>
+
+    <!-- Capabilities & Scroll Prompt -->
+    <div class="identity-footer-row">
+      <div class="tag-list">
+        <span class="tag-item">REASONING AGENTS</span>
+        <span class="tag-item">GROUNDED RAG</span>
+        <span class="tag-item">DISTRIBUTED BACKENDS</span>
+      </div>
+
+      <div class="scroll-prompt">
+        <span class="prompt-text">SCROLL TO DISCOVER</span>
+        <span class="prompt-arrow">&darr;</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from '@/lib/gsap';
+
+  const initIdentityAnimation = () => {
+    const hero = document.getElementById('scene-identity');
+    if (!hero) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const metaBar = hero.querySelector('.identity-meta-bar');
+    const chars = hero.querySelectorAll('.hero-name .char-span, .hero-name .dot-span');
+    const roleBadge = hero.querySelector('.hero-role-badge');
+    const footerRow = hero.querySelector('.identity-footer-row');
+
+    if (!metaBar || !chars.length || !roleBadge || !footerRow) return;
+
+    const tl = gsap.timeline({
+      defaults: { ease: 'power3.out' },
+      onComplete: () => {
+        gsap.set([metaBar, chars, roleBadge, footerRow], { clearProps: 'all' });
+      }
+    });
+
+    tl.fromTo(metaBar, { opacity: 0, y: -15 }, { opacity: 1, y: 0, duration: 0.5 })
+      .fromTo(chars, 
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, stagger: 0.04, duration: 0.7 },
+        '-=0.2'
+      )
+      .fromTo(roleBadge, { opacity: 0, x: -15 }, { opacity: 1, x: 0, duration: 0.5 }, '-=0.3')
+      .fromTo(footerRow, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.2');
+  };
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initIdentityAnimation();
+  }
+  document.addEventListener('DOMContentLoaded', initIdentityAnimation);
+  document.addEventListener('astro:page-load', initIdentityAnimation);
+</script>
+
+<style>
+  .scene-identity {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: var(--space-8) var(--space-6);
+    background-color: var(--color-bg-primary);
+    border-bottom: 1px solid var(--border-color-subtle);
+    overflow: hidden;
+  }
+
+  .identity-inner {
+    max-width: var(--max-width-site);
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 72vh;
+  }
+
+  .identity-meta-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--border-color-subtle);
+    padding-bottom: var(--space-4);
+    letter-spacing: 0.08em;
+  }
+
+  .identity-title-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin: var(--space-12) 0;
+  }
+
+  .hero-name {
+    font-family: var(--font-sans);
+    font-size: clamp(2.8rem, 14vw, 13.5rem);
+    font-weight: 900;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--color-text-primary);
+    display: flex;
+  }
+
+  .char-span {
+    display: inline-block;
+  }
+
+  .dot-span {
+    color: var(--color-accent-primary);
+    display: inline-block;
+  }
+
+  .hero-role-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .role-divider {
+    color: var(--color-accent-primary);
+  }
+
+  .role-sub {
+    color: var(--color-text-secondary);
+    font-weight: 400;
+  }
+
+  .identity-footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid var(--border-color-subtle);
+    padding-top: var(--space-6);
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+  }
+
+  .tag-item {
+    border: 1px solid var(--border-color-subtle);
+    padding: 0.35rem 0.85rem;
+    background-color: var(--color-surface-elevated);
+    letter-spacing: 0.05em;
+  }
+
+  .scroll-prompt {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  .prompt-arrow {
+    color: var(--color-accent-primary);
+    animation: bounce 1.5s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  @media (max-width: 768px) {
+    .identity-footer-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+
+    .hero-role-badge {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-1);
+    }
+
+    .role-divider {
+      display: none;
+    }
+  }
+</style>

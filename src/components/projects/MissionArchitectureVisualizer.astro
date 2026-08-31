@@ -1,0 +1,185 @@
+---
+interface ArchNode {
+  id: string;
+  label: string;
+  type?: string;
+  targets?: string[];
+}
+
+interface Props {
+  architectureNodes?: ArchNode[];
+  rawArchitecture?: string;
+}
+
+const { architectureNodes = [], rawArchitecture = '' } = Astro.props;
+const hasVerifiedNodes = architectureNodes && architectureNodes.length > 0;
+---
+
+<div class="mission-arch-visualizer brutalist-box">
+  <div class="arch-header">
+    <span class="section-title">// SYSTEM ARCHITECTURE 2D TOPOLOGY</span>
+    <span class="arch-status">{hasVerifiedNodes ? 'VERIFIED DATA' : 'STANDBY'}</span>
+  </div>
+
+  {
+    hasVerifiedNodes ? (
+      <div class="svg-diagram-wrapper">
+        <svg viewBox="0 0 740 180" class="mission-svg">
+          <defs>
+            <pattern id="arch-grid" width="16" height="16" patternUnits="userSpaceOnUse">
+              <path d="M 16 0 L 0 0 0 16" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#arch-grid)" />
+
+          {/* Render connecting edges */}
+          {architectureNodes.map((_, idx) => {
+            if (idx >= architectureNodes.length - 1) return null;
+            const spacing = 700 / Math.max(architectureNodes.length, 1);
+            const x1 = 50 + idx * spacing + 60;
+            const x2 = 50 + (idx + 1) * spacing - 60;
+            const y = 90;
+            const pathD = `M ${x1} ${y} L ${x2} ${y}`;
+            return (
+              <g class="arch-svg-edge">
+                <line x1={x1} y1={y} x2={x2} y2={y} stroke="#3f3f46" stroke-width="1.5" stroke-dasharray="3 3" class="edge-line" />
+                <circle r="3" fill="#ff2a4b">
+                  <animateMotion path={pathD} dur="2s" repeatCount="indefinite" />
+                </circle>
+              </g>
+            );
+          })}
+
+          {/* Render architecture nodes */}
+          {architectureNodes.map((node, idx) => {
+            const total = architectureNodes.length;
+            const spacing = 700 / Math.max(total, 1);
+            const x = 50 + idx * spacing;
+            const y = 90;
+
+            return (
+              <g class="arch-svg-node" data-node-id={node.id} transform={`translate(${x - 60}, ${y - 22})`}>
+                <rect width="120" height="44" fill="#0c0c10" stroke="#ff2a4b" stroke-width="1.5" />
+                <text x="10" y="16" fill="#ff2a4b" font-size="9" font-family="monospace" font-weight="bold">0{idx + 1}</text>
+                <text x="10" y="32" fill="#ffffff" font-size="10" font-family="sans-serif" font-weight="bold">
+                  {node.label.length > 14 ? `${node.label.slice(0, 12)}..` : node.label}
+                </text>
+              </g>
+            );
+          })}
+        </svg>
+      </div>
+    ) : (
+      <div class="arch-placeholder-box">
+        <div class="placeholder-icon">⚠️</div>
+        <div class="placeholder-title">ARCHITECTURE DIAGRAM: STANDBY</div>
+        <p class="placeholder-desc">
+          Detailed 2D topology is currently being verified for this mission. Raw architecture pipeline string:
+        </p>
+        <code class="raw-pipeline-code">{rawArchitecture}</code>
+      </div>
+    )
+  }
+</div>
+
+<script>
+  import { gsap } from '@/lib/gsap';
+
+  const initArchAnimations = () => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    gsap.from('.arch-svg-node', {
+      scale: 0.85,
+      opacity: 0,
+      duration: 0.4,
+      stagger: 0.12,
+      ease: 'back.out(1.4)',
+    });
+    gsap.from('.edge-line', {
+      strokeDashoffset: 100,
+      opacity: 0,
+      duration: 0.5,
+      delay: 0.3,
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', initArchAnimations);
+  document.addEventListener('astro:page-load', initArchAnimations);
+</script>
+
+<style>
+  .mission-arch-visualizer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .arch-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    border-bottom: 1px solid var(--border-color-subtle);
+    padding-bottom: var(--space-2);
+  }
+
+  .section-title {
+    color: var(--color-accent-primary);
+    letter-spacing: 0.08em;
+  }
+
+  .arch-status {
+    color: var(--color-text-muted);
+  }
+
+  .svg-diagram-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .mission-svg {
+    width: 100%;
+    height: auto;
+    min-width: 650px;
+  }
+
+  .arch-placeholder-box {
+    background-color: var(--color-bg-tertiary);
+    border: 1px dashed var(--border-color-strong);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-2);
+  }
+
+  .placeholder-icon {
+    font-size: 1.5rem;
+  }
+
+  .placeholder-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-semantic-warning);
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+
+  .placeholder-desc {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .raw-pipeline-code {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    background-color: var(--color-bg-primary);
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--border-color-subtle);
+    margin-top: var(--space-2);
+  }
+</style>

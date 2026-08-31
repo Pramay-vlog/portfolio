@@ -1,0 +1,100 @@
+---
+interface Props {
+  technologies: string[];
+  links?: {
+    github?: string;
+    live?: string;
+    docs?: string;
+  };
+}
+
+const { technologies, links } = Astro.props;
+---
+
+<aside class="dossier-sidebar brutalist-box">
+  <div class="sidebar-block">
+    <h3 class="sidebar-title">// TECHNOLOGIES</h3>
+    <div class="tech-stack-list">
+      {technologies.map((tech: string) => <span class="tech-chip">{tech}</span>)}
+    </div>
+  </div>
+
+  <div class="sidebar-block">
+    <a href="/projects" class="brutalist-button back-btn">&larr; BACK TO MISSIONS</a>
+  </div>
+</aside>
+
+<style>
+  .dossier-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-4));
+  }
+
+  .sidebar-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .sidebar-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.08em;
+  }
+
+  .tech-stack-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tech-chip {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    padding: 0.25rem 0.6rem;
+    background-color: var(--color-bg-tertiary);
+    border: 1px solid var(--border-color-strong);
+  }
+
+  .links-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .link-btn {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--color-accent-primary);
+    display: block;
+    text-align: center;
+  }
+
+  .link-btn:hover {
+    background-color: var(--color-accent-dim);
+  }
+
+  .back-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .dossier-sidebar {
+      position: static;
+      margin-top: var(--space-4);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .dossier-sidebar {
+      padding: var(--space-4);
+    }
+  }
+</style>

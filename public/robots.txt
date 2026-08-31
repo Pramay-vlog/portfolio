@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pramay-os.com/sitemap.xml

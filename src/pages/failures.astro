@@ -1,0 +1,132 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FailureCard from '../components/failures/FailureCard.astro';
+
+const failures: CollectionEntry<'failures'>[] = await getCollection('failures');
+---
+
+<BaseLayout title="FAILURES // Post-Mortems — PRAMAY USADADIYA" activeNav="LAB">
+  <main class="failures-page-container">
+    <div class="failures-page-inner">
+      <!-- Failures Hero Header featuring "FAILURE IS DATA." -->
+      <div class="failures-hero brutalist-box-accent">
+        <div class="hero-tag">ENGINEERING INCIDENT LOGS // POST-MORTEMS</div>
+        <h1 class="hero-title">&quot;FAILURE IS DATA.&quot;</h1>
+        <p class="hero-subtext">
+          First-class incident post-mortems. We document real-world system failures, root cause metrics, corrective actions, and systemic engineering takeaways.
+        </p>
+
+        <div class="motto-banner">
+          <span class="motto-badge">PRINCIPLE: PROD SURVIVAL</span>
+          <span class="motto-text">FAILURES ARE EVIDENCE OF SYSTEM BOUNDARY DISCOVERY.</span>
+        </div>
+      </div>
+
+      <!-- Failures Grid -->
+      <div class="failures-grid">
+        {failures.map((failure, idx) => <FailureCard failure={failure} index={idx} />)}
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import { gsap } from '@/lib/gsap';
+
+  const initFailureAnimations = () => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    gsap.fromTo(
+      '.failure-card',
+      { y: 20, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.4,
+        stagger: 0.08,
+        ease: 'power2.out',
+        clearProps: 'all',
+      }
+    );
+  };
+
+  document.addEventListener('astro:page-load', initFailureAnimations);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initFailureAnimations();
+  }
+</script>
+
+<style>
+  .failures-page-container {
+    padding: var(--space-8) var(--space-6) var(--space-16);
+    background-color: var(--color-bg-primary);
+  }
+
+  .failures-page-inner {
+    max-width: var(--max-width-site);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .failures-hero {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-semantic-danger);
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+
+  .hero-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--color-semantic-danger);
+    letter-spacing: -0.02em;
+  }
+
+  .hero-subtext {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    max-width: 780px;
+    line-height: 1.5;
+  }
+
+  .motto-banner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    border-top: 1px solid var(--border-color-subtle);
+    padding-top: var(--space-3);
+    margin-top: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+  }
+
+  .motto-badge {
+    background-color: var(--color-semantic-danger);
+    color: #ffffff;
+    padding: 0.2rem 0.6rem;
+    font-weight: 700;
+  }
+
+  .motto-text {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  .failures-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: var(--space-6);
+  }
+</style>

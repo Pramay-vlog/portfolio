@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#050505"/>
+  
+  <!-- Grid Pattern -->
+  <defs>
+    <pattern id="og-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#og-grid)"/>
+
+  <!-- Border Box -->
+  <rect x="40" y="40" width="1120" height="550" fill="#0d0d0f" stroke="#00ff66" stroke-width="2"/>
+
+  <!-- Header Badge -->
+  <rect x="80" y="80" width="320" height="36" fill="#141418" stroke="#3d3d4a" stroke-width="1"/>
+  <text x="96" y="103" fill="#00ff66" font-family="monospace" font-size="14" font-weight="bold" letter-spacing="1.5">PRIVATE ENGINEERING SYSTEM</text>
+
+  <!-- Title -->
+  <text x="80" y="210" fill="#00ff66" font-family="monospace" font-size="64" font-weight="900" letter-spacing="2">PRAMAY.OS</text>
+
+  <!-- Subtitle / SEO Identity -->
+  <text x="80" y="270" fill="#ffffff" font-family="sans-serif" font-size="32" font-weight="bold">Pramay Usadadiya — AI Software Engineer</text>
+  
+  <text x="80" y="320" fill="#8c8c9a" font-family="sans-serif" font-size="20">Grounded RAG Pipelines &bull; Autonomous Reasoning Agents &bull; System Architecture</text>
+
+  <!-- Status Bar Footer -->
+  <line x1="80" y1="510" x2="1120" y2="510" stroke="#22222a" stroke-width="1"/>
+  <text x="80" y="545" fill="#4e4e5a" font-family="monospace" font-size="14">STATUS: ONLINE // SYS_OK</text>
+  <text x="800" y="545" fill="#00ff66" font-family="monospace" font-size="14">CLEARANCE: PUBLIC DECLASSIFIED</text>
+</svg>

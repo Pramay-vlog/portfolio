@@ -1,0 +1,212 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MissionHeader from '../../components/projects/MissionHeader.astro';
+import MissionArchitectureVisualizer from '../../components/projects/MissionArchitectureVisualizer.astro';
+import MissionSidebar from '../../components/projects/MissionSidebar.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project: CollectionEntry<'projects'>) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+type Props = {
+  project: CollectionEntry<'projects'>;
+};
+
+const { project } = Astro.props as Props;
+const { data, id } = project;
+const { Content } = await render(project);
+---
+
+<BaseLayout
+  title={`${data.title} // Mission Dossier — PRAMAY USADADIYA`}
+  description={data.objective}
+  activeNav="WORK"
+>
+  <main class="dossier-page-container">
+    <article class="mission-dossier-inner">
+      <!-- Reusable Mission Header -->
+      <MissionHeader
+        title={data.title}
+        classification={data.classification}
+        level={data.level}
+        status={data.status}
+        missionId={id}
+      />
+
+      <!-- Dossier Content Body Grid -->
+      <div class="dossier-body-grid">
+        <!-- Left Column: Primary Engineering Analysis -->
+        <div class="dossier-main-col">
+          <!-- 01. Problem Statement -->
+          <section class="dossier-section brutalist-box">
+            <h3 class="section-title">// 01. PROBLEM STATEMENT</h3>
+            <p class="section-text">{data.problem}</p>
+          </section>
+
+          <!-- 02. Objective -->
+          <section class="dossier-section brutalist-box">
+            <h3 class="section-title">// 02. OBJECTIVE</h3>
+            <p class="section-text">{data.objective}</p>
+          </section>
+
+          <!-- 03. System Architecture Component -->
+          <MissionArchitectureVisualizer
+            architectureNodes={data.architectureNodes}
+            rawArchitecture={data.architecture}
+          />
+
+          <!-- 04. Engineering Decisions -->
+          <section class="dossier-section brutalist-box">
+            <h3 class="section-title">// 04. KEY ARCHITECTURAL DECISIONS</h3>
+            <ul class="dossier-list">
+              {data.decisions.map((dec: string) => <li>&rarr; {dec}</li>)}
+            </ul>
+          </section>
+
+          <!-- 05. Challenges & Failures -->
+          <section class="dossier-section brutalist-box warning-box">
+            <h3 class="section-title warning-title">// 05. CHALLENGES &amp; INCIDENT LOGS</h3>
+            <div class="challenges-sub">
+              <h4 class="sub-label">// OPERATIONAL CHALLENGES:</h4>
+              <ul class="dossier-list">
+                {data.challenges.map((ch: string) => <li>&bull; {ch}</li>)}
+              </ul>
+            </div>
+            {
+              data.failures && data.failures.length > 0 && (
+                <div class="failures-sub">
+                  <h4 class="sub-label danger-text">// INCIDENTS / FAILURES LOGGED:</h4>
+                  <ul class="dossier-list danger-text">
+                    {data.failures.map((fl: string) => <li>&bull; {fl}</li>)}
+                  </ul>
+                </div>
+              )
+            }
+          </section>
+
+          <!-- 06. Results & Lessons -->
+          <section class="dossier-section brutalist-box">
+            <h3 class="section-title">// 06. RESULTS &amp; LESSONS LEARNED</h3>
+            <p class="section-text"><strong>DELIVERED RESULT:</strong> {data.results}</p>
+            <div class="lessons-wrap">
+              <h4 class="sub-label">// KEY ENGINEERING LESSONS:</h4>
+              <ul class="dossier-list">
+                {data.lessons.map((ls: string) => <li>&check; {ls}</li>)}
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <!-- Right Column: Sidebar -->
+        <MissionSidebar technologies={data.technologies} links={data.links} />
+      </div>
+    </article>
+  </main>
+</BaseLayout>
+
+<script>
+  import { trackEvent } from '@/lib/analytics';
+  const track = () => {
+    const path = window.location.pathname;
+    const parts = path.split('/');
+    const pId = parts[parts.length - 1] || 'unknown';
+    trackEvent('project_opened', { projectId: pId });
+  };
+  document.addEventListener('DOMContentLoaded', track);
+  document.addEventListener('astro:page-load', track);
+</script>
+
+<style>
+  .dossier-page-container {
+    padding: var(--space-8) var(--space-6) var(--space-16);
+    background-color: var(--color-bg-primary);
+  }
+
+  .mission-dossier-inner {
+    max-width: var(--max-width-site);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .dossier-body-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-6);
+    align-items: flex-start;
+  }
+
+  @media (max-width: 900px) {
+    .dossier-body-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .dossier-main-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .dossier-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-strong);
+    padding: var(--space-6);
+  }
+
+  .section-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.08em;
+    font-weight: 700;
+  }
+
+  .section-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+
+  .dossier-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+  }
+
+  .warning-box {
+    border-color: var(--color-semantic-warning);
+  }
+
+  .warning-title {
+    color: var(--color-semantic-warning);
+  }
+
+  .sub-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2);
+    margin-top: var(--space-2);
+  }
+
+  .danger-text {
+    color: var(--color-semantic-danger);
+  }
+
+  .lessons-wrap {
+    margin-top: var(--space-3);
+  }
+</style>

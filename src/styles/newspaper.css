@@ -1,0 +1,79 @@
+/* Editorial World (The Pramay Times) */
+
+.editorial-paper {
+  background-color: var(--color-paper-bg);
+  color: var(--color-paper-text);
+  font-family: var(--font-serif);
+  padding: 2rem;
+  border: 2px solid var(--color-paper-border);
+  box-shadow: var(--shadow-hard-md);
+  border-radius: 0 !important;
+}
+
+.editorial-masthead {
+  border-bottom: 3px double var(--color-paper-border);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.editorial-title {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+.editorial-meta {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  border-top: 1px solid var(--color-paper-border);
+  border-bottom: 1px solid var(--color-paper-border);
+  padding: 0.35rem 0;
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editorial-headline {
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: var(--font-size-2xl);
+  text-transform: uppercase;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+.editorial-lead {
+  font-size: var(--font-size-md);
+  line-height: 1.5;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+.editorial-column {
+  column-count: 2;
+  column-gap: 1.5rem;
+  column-rule: 1px solid var(--color-paper-border);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .editorial-column {
+    column-count: 1;
+  }
+}
+
+.editorial-dropcap::first-letter {
+  float: left;
+  font-size: 3.5rem;
+  line-height: 0.8;
+  font-weight: 700;
+  padding-right: 0.5rem;
+  font-family: var(--font-serif);
+}

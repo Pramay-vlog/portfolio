@@ -1,0 +1,160 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  failure: CollectionEntry<'failures'>;
+  index: number;
+}
+
+const { failure, index } = Astro.props;
+const { data, id } = failure;
+
+const incidentId = `INCIDENT-${String(index + 1).padStart(3, '0')}`;
+---
+
+<article class="failure-card brutalist-box">
+  <div class="card-top-row">
+    <span class="incident-id">{incidentId}</span>
+    <span class="incident-status-tag">{data.status}</span>
+  </div>
+
+  <h3 class="incident-title">{data.title}</h3>
+
+  <div class="diagnostic-section">
+    <span class="diag-label">// ROOT CAUSE</span>
+    <p class="diag-text">{data.cause}</p>
+  </div>
+
+  <div class="diagnostic-section">
+    <span class="diag-label warning-label">// IMPACT METRIC</span>
+    <p class="diag-text warning-text">{data.impact}</p>
+  </div>
+
+  <div class="diagnostic-section">
+    <span class="diag-label info-label">// CORRECTIVE ACTION</span>
+    <p class="diag-text info-text">{data.correction}</p>
+  </div>
+
+  <div class="diagnostic-section">
+    <span class="diag-label accent-label">// LESSON LEARNED</span>
+    <p class="diag-text accent-text">{data.lesson}</p>
+  </div>
+
+  <div class="card-footer-row">
+    <a href={`/failures/${id}`} class="brutalist-button open-incident-btn">
+      [ OPEN INCIDENT DOSSIER ]
+    </a>
+  </div>
+</article>
+
+<style>
+  .failure-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-semantic-danger);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-hard-danger);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .failure-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0px var(--color-semantic-danger);
+  }
+
+  .card-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+  }
+
+  .incident-id {
+    color: var(--color-semantic-danger);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .incident-status-tag {
+    color: var(--color-semantic-danger);
+    background-color: var(--color-semantic-danger-dim);
+    border: 1px solid var(--color-semantic-danger);
+    padding: 0.2rem 0.6rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .incident-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-xl);
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    color: var(--color-text-primary);
+  }
+
+  .diagnostic-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .diag-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .warning-label {
+    color: var(--color-semantic-warning);
+  }
+
+  .info-label {
+    color: var(--color-semantic-info);
+  }
+
+  .accent-label {
+    color: var(--color-accent-primary);
+  }
+
+  .diag-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .warning-text {
+    color: var(--color-semantic-warning);
+  }
+
+  .info-text {
+    color: var(--color-text-primary);
+  }
+
+  .accent-text {
+    color: var(--color-accent-primary);
+    font-weight: 600;
+  }
+
+  .card-footer-row {
+    margin-top: var(--space-2);
+    border-top: 1px solid #330000;
+    padding-top: var(--space-4);
+  }
+
+  .open-incident-btn {
+    width: 100%;
+    border-color: var(--color-semantic-danger);
+    background-color: transparent;
+    color: var(--color-semantic-danger);
+  }
+
+  .open-incident-btn:hover {
+    background-color: var(--color-semantic-danger);
+    color: var(--color-bg-primary);
+  }
+</style>

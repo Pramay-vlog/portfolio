@@ -1,0 +1,133 @@
+export interface OSModule {
+  id: string;
+  code: string;
+  num: string;
+  title: string;
+  category: string;
+  description: string;
+  href: string;
+  status: 'ONLINE' | 'STANDBY' | 'CLASSIFIED' | 'EXPERIMENTAL';
+  badge?: string;
+}
+
+export const OS_MODULES: OSModule[] = [
+  {
+    id: 'systems',
+    code: 'SYS_01',
+    num: '01',
+    title: 'SYSTEMS',
+    category: 'ARCHITECTURE',
+    description: 'Interactive SVG visual canvas of engineering architecture, RAG pipelines, and agent flow.',
+    href: '/systems',
+    status: 'ONLINE',
+    badge: 'INTERACTIVE',
+  },
+  {
+    id: 'projects',
+    code: 'PRJ_02',
+    num: '02',
+    title: 'PROJECTS',
+    category: 'MISSIONS',
+    description: 'Classified engineering dossiers detailing solved problems, objectives, and outcomes.',
+    href: '/projects',
+    status: 'ONLINE',
+    badge: 'MISSIONS',
+  },
+  {
+    id: 'lab',
+    code: 'LAB_03',
+    num: '03',
+    title: 'AI LAB',
+    category: 'RESEARCH',
+    description: 'Experimental records of autonomous agents, tool selection, and model evaluations.',
+    href: '/lab',
+    status: 'EXPERIMENTAL',
+    badge: 'ACTIVE',
+  },
+  {
+    id: 'research',
+    code: 'RSH_04',
+    num: '04',
+    title: 'RESEARCH',
+    category: 'WHITE PAPERS',
+    description: 'Investigative papers on LLM reasoning, context retrieval, and distributed system limits.',
+    href: '/research',
+    status: 'ONLINE',
+  },
+  {
+    id: 'failures',
+    code: 'FLR_05',
+    num: '05',
+    title: 'FAILURES',
+    category: 'POST-MORTEMS',
+    description: 'First-class engineering incident archive: root causes, impact metrics, and key lessons.',
+    href: '/failures',
+    status: 'ONLINE',
+    badge: 'DATA',
+  },
+  {
+    id: 'experience',
+    code: 'EXP_06',
+    num: '06',
+    title: 'EXPERIENCE',
+    category: 'TIMELINE',
+    description: "The engineer's progression timeline from backend systems to agentic AI engineering.",
+    href: '/experience',
+    status: 'ONLINE',
+  },
+  {
+    id: 'archive',
+    code: 'ARC_07',
+    num: '07',
+    title: 'ARCHIVE',
+    category: 'CLASSIFIED',
+    description: 'Restricted intelligence dossier with redacted engineering records and hidden layers.',
+    href: '/classified',
+    status: 'CLASSIFIED',
+    badge: 'RESTRICTED',
+  },
+  {
+    id: 'ask',
+    code: 'ASK_08',
+    num: '08',
+    title: 'ASK',
+    category: 'AI ENGINE',
+    description: 'Queryable RAG interface backed by portfolio evidence and grounded AI reasoning.',
+    href: '/ask',
+    status: 'STANDBY',
+    badge: 'AI UI',
+  },
+  {
+    id: 'newspaper',
+    code: 'NWS_10',
+    num: '10',
+    title: 'NEWSPAPER',
+    category: 'CHRONICLE',
+    description: 'The Pramay Times editorial world featuring newsprint layouts and investigative articles.',
+    href: '/newspaper',
+    status: 'ONLINE',
+    badge: 'EDITORIAL',
+  },
+  {
+    id: 'levels',
+    code: 'LVL_11',
+    num: '11',
+    title: 'LEVELS',
+    category: 'PROGRESSION',
+    description: 'Engineering boss encounters and career progression narrative.',
+    href: '/levels',
+    status: 'ONLINE',
+    badge: 'GAME',
+  },
+  {
+    id: 'terminal',
+    code: 'TRM_09',
+    num: '09',
+    title: 'TERMINAL',
+    category: 'CLI SHELL',
+    description: 'Interactive command-line shell with full keyboard control and portfolio commands.',
+    href: '/terminal',
+    status: 'ONLINE',
+    badge: 'SHELL',
+  },
+];

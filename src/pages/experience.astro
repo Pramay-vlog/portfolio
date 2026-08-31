@@ -1,0 +1,477 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const experienceEntries: CollectionEntry<'experience'>[] = await getCollection('experience');
+const sortedEntries = experienceEntries.sort((a, b) => a.data.level.localeCompare(b.data.level));
+---
+
+<BaseLayout
+  title="ABOUT & EXPERIENCE // Pramay Usadadiya — AI Software Engineer"
+  description="Identity, career history, capability matrix, and education for Pramay Usadadiya."
+  activeNav="ABOUT"
+>
+  <main class="about-page-container">
+    <div class="about-page-inner">
+      <!-- 01. Identity Block -->
+      <section class="identity-section brutalist-box">
+        <div class="section-tag">01 // IDENTITY</div>
+        <h1 class="identity-name">PRAMAY USADADIYA</h1>
+        <div class="role-pill-row">
+          <span class="role-pill">AI SOFTWARE ENGINEER (5 YEARS EXP)</span>
+          <span class="role-pill">RAG &amp; AI AGENT ARCHITECT</span>
+          <span class="role-pill">FULL-STACK SYSTEMS BUILDER</span>
+        </div>
+
+        <div class="profile-summary-box brutalist-box">
+          <p class="profile-summary-text">
+            An AI Engineer (full-stack AI engineer) working on software engineering projects for 5 years now. Building AI applications that are good enough to be used by real people. I do this by leveraging LLMs alongside Retrieval-Augmented Generation (RAG) and autonomous AI agents, supported by modern frontend frameworks and cloud-native backend microservices.
+          </p>
+        </div>
+
+        <div class="concise-statements-grid">
+          <div class="statement-card">
+            <span class="statement-num">01</span>
+            <p class="statement-text">5 years of hands-on software engineering &amp; production AI development.</p>
+          </div>
+          <div class="statement-card">
+            <span class="statement-num">02</span>
+            <p class="statement-text">
+              Specializing in LangGraph AI agents, vector retrieval (Qdrant, Redis, Pinecone), and FastAPI/Node.js microservices.
+            </p>
+          </div>
+          <div class="statement-card">
+            <span class="statement-num">03</span>
+            <p class="statement-text">
+              Proven track record across healthcare AI (Juno Health), retail SaaS (Bacancy), and high-throughput security &amp; APIs (LogWinTech).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02. Capability Systems Matrix -->
+      <section class="skills-section">
+        <div class="section-title-bar">
+          <h2 class="section-heading">02 // TECHNICAL SKILLS &amp; CAPABILITIES</h2>
+        </div>
+
+        <div class="skills-clusters-grid">
+          <div class="cluster-card brutalist-box">
+            <span class="cluster-tag">CLUSTER 01</span>
+            <h3 class="cluster-title">BACKEND &amp; INFRASTRUCTURE</h3>
+            <p class="cluster-desc">Scalable microservices, high-throughput TCP engines, database optimization, and caching.</p>
+            <div class="tech-list">
+              <span class="tech-item">Node.js</span>
+              <span class="tech-item">Python</span>
+              <span class="tech-item">FastAPI</span>
+              <span class="tech-item">Express.js</span>
+              <span class="tech-item">PostgreSQL</span>
+              <span class="tech-item">MongoDB</span>
+              <span class="tech-item">Redis (Streams/PubSub)</span>
+            </div>
+          </div>
+
+          <div class="cluster-card brutalist-box highlight-cluster">
+            <span class="cluster-tag accent-text">CLUSTER 02</span>
+            <h3 class="cluster-title accent-text">AI, RAG &amp; AGENTIC SYSTEMS</h3>
+            <p class="cluster-desc">LangGraph agent loops, schema-constrained function calling, and hybrid vector RAG pipelines.</p>
+            <div class="tech-list">
+              <span class="tech-item">OpenAI / Claude / Gemini / Ollama</span>
+              <span class="tech-item">LangChain</span>
+              <span class="tech-item">LangGraph</span>
+              <span class="tech-item">LlamaIndex</span>
+              <span class="tech-item">Vector DBs (Qdrant, Pinecone, Chroma, FAISS)</span>
+              <span class="tech-item">Hybrid Search &amp; Reranking</span>
+            </div>
+          </div>
+
+          <div class="cluster-card brutalist-box">
+            <span class="cluster-tag">CLUSTER 03</span>
+            <h3 class="cluster-title">CLOUD, DEVOPS &amp; FRONTEND</h3>
+            <p class="cluster-desc">Containerization, CI/CD automation, cloud deployment, and modern responsive web apps.</p>
+            <div class="tech-list">
+              <span class="tech-item">Docker</span>
+              <span class="tech-item">AWS EC2 / S3 / CloudWatch</span>
+              <span class="tech-item">GitHub Actions CI/CD</span>
+              <span class="tech-item">Nginx</span>
+              <span class="tech-item">Next.js</span>
+              <span class="tech-item">React.js</span>
+              <span class="tech-item">Astro (SSG)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03. Professional Career Experience -->
+      <section class="progression-timeline-section">
+        <div class="section-title-bar">
+          <h2 class="section-heading">03 // PROFESSIONAL EXPERIENCE HISTORY</h2>
+        </div>
+
+        <div class="timeline-list">
+          {
+            sortedEntries.map((entry) => {
+              const data = entry.data;
+
+              return (
+                <div class="timeline-stage-card brutalist-box">
+                  <div class="stage-top-bar">
+                    <span class="stage-level">{data.level}</span>
+                    <span class="stage-title-text">{data.title}</span>
+                  </div>
+
+                  <p class="stage-summary">{data.summary}</p>
+
+                  <div class="stage-caps-block">
+                    <span class="caps-heading">KEY RESPONSIBILITIES &amp; IMPACT</span>
+                    <ul class="caps-list">
+                      {data.capabilities.map((cap) => (
+                        <li class="cap-item">
+                          <span class="cap-check">&check;</span>
+                          <span class="cap-text">{cap}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
+      </section>
+
+      <!-- 04. Education -->
+      <section class="education-section">
+        <div class="section-title-bar">
+          <h2 class="section-heading">04 // EDUCATION</h2>
+        </div>
+        <div class="education-card brutalist-box">
+          <div class="edu-header">
+            <span class="edu-degree">BACHELOR'S IN COMPUTER APPLICATIONS (BCA)</span>
+            <span class="edu-period">2019 – 2022</span>
+          </div>
+          <p class="edu-institution">Veer Narmad South Gujarat University | Surat, IN</p>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import { gsap } from '@/lib/gsap';
+
+  const initAboutAnimations = () => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    gsap.fromTo(
+      '.statement-card, .cluster-card, .timeline-stage-card, .education-card',
+      { y: 20, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.4,
+        stagger: 0.08,
+        ease: 'power2.out',
+        clearProps: 'all',
+      }
+    );
+  };
+
+  document.addEventListener('astro:page-load', initAboutAnimations);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initAboutAnimations();
+  }
+</script>
+
+<style>
+  .about-page-container {
+    padding: var(--space-12) var(--space-6) var(--space-16);
+    background-color: var(--color-bg-primary);
+  }
+
+  .about-page-inner {
+    max-width: var(--max-width-site);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .identity-section {
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--border-color-subtle);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .section-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+
+  .identity-name {
+    font-family: var(--font-sans);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--color-text-primary);
+    line-height: 1;
+  }
+
+  .role-pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .role-pill {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    border: 1px solid var(--color-accent-primary);
+    background-color: var(--color-accent-dim);
+    padding: 0.3rem 0.8rem;
+    font-weight: 700;
+  }
+
+  .profile-summary-box {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-strong);
+    padding: var(--space-6);
+  }
+
+  .profile-summary-text {
+    font-size: var(--font-size-md);
+    line-height: 1.6;
+    color: var(--color-text-primary);
+  }
+
+  .concise-statements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+    border-top: 1px solid var(--border-color-subtle);
+    padding-top: var(--space-6);
+  }
+
+  .statement-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .statement-num {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    font-weight: 900;
+  }
+
+  .statement-text {
+    font-size: var(--font-size-md);
+    color: var(--color-text-primary);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .skills-section, .progression-timeline-section, .education-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .section-title-bar {
+    border-bottom: 1px solid var(--border-color-subtle);
+    padding-bottom: var(--space-2);
+  }
+
+  .section-heading {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.08em;
+    font-weight: 700;
+  }
+
+  .skills-clusters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .cluster-card {
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--border-color-subtle);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .cluster-card.highlight-cluster {
+    border-color: var(--color-accent-primary);
+    box-shadow: var(--shadow-hard-accent);
+  }
+
+  .cluster-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+
+  .accent-text { color: var(--color-accent-primary); }
+
+  .cluster-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-xl);
+    font-weight: 900;
+    color: var(--color-text-primary);
+  }
+
+  .cluster-desc {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+  }
+
+  .tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: auto;
+    padding-top: var(--space-2);
+  }
+
+  .tech-item {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-subtle);
+    padding: 0.2rem 0.5rem;
+  }
+
+  .timeline-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .timeline-stage-card {
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--border-color-subtle);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .stage-top-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+  }
+
+  .stage-level {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+    font-size: var(--font-size-xs);
+  }
+
+  .stage-title-text {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-lg);
+    font-weight: 900;
+    color: var(--color-text-primary);
+  }
+
+  .stage-summary {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .stage-caps-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .caps-heading {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+
+  .caps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .cap-item {
+    display: flex;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-primary);
+  }
+
+  .cap-check {
+    color: var(--color-accent-primary);
+  }
+
+  .stage-evidence-row {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    display: flex;
+    gap: var(--space-2);
+    border-top: 1px solid var(--border-color-subtle);
+    padding-top: var(--space-3);
+  }
+
+  .evidence-tag { color: var(--color-text-muted); }
+  .evidence-link { color: var(--color-accent-primary); text-decoration: none; font-weight: 700; }
+
+  .education-card {
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--border-color-subtle);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .edu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+  }
+
+  .edu-degree {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-lg);
+    font-weight: 900;
+    color: var(--color-text-primary);
+  }
+
+  .edu-period {
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    font-weight: 700;
+  }
+
+  .edu-institution {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+</style>

@@ -1,0 +1,154 @@
+---
+---
+
+<section class="scene-hook" id="scene-hook">
+  <div class="hook-inner">
+    <div class="hook-label">02 // POSITIONING STATEMENT</div>
+
+    <div class="hook-statement-container">
+      <h2 class="hook-statement">
+        <span class="word-split">I</span>
+        <span class="word-split highlight">BUILD</span>
+        <span class="word-split">SYSTEMS</span>
+        <span class="word-split">THAT</span>
+        <span class="word-split accent">THINK.</span>
+      </h2>
+    </div>
+
+    <div class="hook-sub-block">
+      <p class="hook-description">
+        Moving beyond passive prompt wrappers into autonomous multi-agent reasoning, grounded hybrid retrieval, and resilient production systems that survive contact with real-world complexity.
+      </p>
+      <div class="hook-evidence-tag">
+        <span class="tag-text">ENGINEERING &bull; RESEARCH &bull; REASONING</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap, ScrollTrigger } from '@/lib/gsap';
+
+  const initHookScrollAnimation = () => {
+    const section = document.getElementById('scene-hook');
+    if (!section) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const words = section.querySelectorAll('.word-split');
+    if (!words || words.length === 0) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(
+      words,
+      { opacity: 0.2, y: 25 },
+      {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          end: 'top 20%',
+          scrub: 0.8,
+        },
+        opacity: 1,
+        y: 0,
+        stagger: 0.15,
+        ease: 'power2.out',
+      }
+    );
+  };
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initHookScrollAnimation();
+  }
+  document.addEventListener('DOMContentLoaded', initHookScrollAnimation);
+  document.addEventListener('astro:page-load', initHookScrollAnimation);
+</script>
+
+<style>
+  .scene-hook {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-16) var(--space-6);
+    background-color: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--border-color-subtle);
+    position: relative;
+  }
+
+  .hook-inner {
+    max-width: var(--max-width-site);
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .hook-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+
+  .hook-statement-container {
+    width: 100%;
+  }
+
+  .hook-statement {
+    font-family: var(--font-sans);
+    font-size: clamp(3.2rem, 10vw, 8.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3em;
+  }
+
+  .word-split {
+    display: inline-block;
+  }
+
+  .word-split.accent {
+    color: var(--color-accent-primary);
+  }
+
+  .hook-sub-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid var(--border-color-subtle);
+    padding-top: var(--space-6);
+    gap: var(--space-8);
+  }
+
+  .hook-description {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: var(--color-text-secondary);
+    max-width: 720px;
+    line-height: 1.45;
+  }
+
+  .hook-evidence-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .hook-sub-block {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+  }
+</style>

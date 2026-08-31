@@ -1,0 +1,26 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#EAE7DF"/>
+  <rect x="40" y="40" width="1120" height="720" stroke="#111111" stroke-width="2" stroke-dasharray="8 8"/>
+  <text x="80" y="120" font-family="sans-serif" font-size="28" font-weight="bold" fill="#111111">// BEFORE TRANSFORMATION</text>
+  <text x="80" y="160" font-family="monospace" font-size="18" fill="#555550">LEGACY SYSTEM: MONOLITHIC PIPELINE &amp; UNSTRUCTURED DATA</text>
+  
+  <!-- Legacy Box Stack -->
+  <g transform="translate(150, 240)">
+    <rect x="0" y="0" width="300" height="120" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+    <text x="30" y="50" font-family="sans-serif" font-size="18" font-weight="bold" fill="#111111">LEGACY MONOLITH API</text>
+    <text x="30" y="80" font-family="monospace" font-size="14" fill="#555550">&bull; Single point of failure</text>
+
+    <line x1="300" y1="60" x2="450" y2="60" stroke="#111111" stroke-width="2" stroke-dasharray="4 4"/>
+
+    <rect x="450" y="0" width="300" height="120" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+    <text x="480" y="50" font-family="sans-serif" font-size="18" font-weight="bold" fill="#111111">UNSTRUCTURED DATABASE</text>
+    <text x="480" y="80" font-family="monospace" font-size="14" fill="#555550">&bull; High query latency (1200ms)</text>
+  </g>
+
+  <g transform="translate(150, 420)">
+    <rect x="0" y="0" width="750" height="180" fill="#F3F0E8" stroke="#D92638" stroke-width="2"/>
+    <text x="30" y="50" font-family="sans-serif" font-size="20" font-weight="bold" fill="#D92638">CRITICAL BOTTLENECK DETECTED</text>
+    <text x="30" y="90" font-family="monospace" font-size="16" fill="#111111">STATUS: UNBOUNDED RETRIEVAL HALLUCINATION RATE ~ 34%</text>
+    <text x="30" y="130" font-family="monospace" font-size="14" fill="#555550">Context Window Exhaustion &amp; Missing Verification Loop</text>
+  </g>
+</svg>

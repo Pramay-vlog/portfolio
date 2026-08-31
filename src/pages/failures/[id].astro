@@ -1,0 +1,261 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const failures = await getCollection('failures');
+  return failures.map((failure: CollectionEntry<'failures'>) => ({
+    params: { id: failure.id },
+    props: { failure },
+  }));
+}
+
+type Props = {
+  failure: CollectionEntry<'failures'>;
+};
+
+const { failure } = Astro.props as Props;
+const { data, id } = failure;
+---
+
+<BaseLayout title={`${data.title} // Incident Report — PRAMAY USADADIYA`} activeNav="LAB">
+  <main class="dossier-page-container">
+    <div class="dossier-page-inner">
+      <article class="failure-dossier-container">
+        <!-- Dossier Header -->
+        <header class="dossier-header brutalist-box">
+          <div class="header-meta-row">
+            <span class="danger-badge">INCIDENT DOSSIER // POST-MORTEM</span>
+            <span class="incident-id">ID: {id.toUpperCase()}</span>
+          </div>
+          <h1 class="dossier-title">{data.title}</h1>
+          <div class="status-bar-row">
+            <span>STATUS: <strong class="danger-text">{data.status}</strong></span>
+          </div>
+        </header>
+
+        <!-- Main Incident Analysis Body Grid -->
+        <div class="dossier-body-grid">
+          <div class="dossier-main-col">
+            <!-- 01. Root Cause -->
+            <section class="dossier-section brutalist-box">
+              <h3 class="section-title danger-title">// 01. ROOT CAUSE DIAGNOSTIC</h3>
+              <p class="section-text">{data.cause}</p>
+            </section>
+
+            <!-- 02. Impact Metric -->
+            <section class="dossier-section brutalist-box warning-box">
+              <h3 class="section-title warning-title">// 02. SYSTEM IMPACT</h3>
+              <p class="section-text warning-text">{data.impact}</p>
+            </section>
+
+            <!-- 03. Corrective Action -->
+            <section class="dossier-section brutalist-box">
+              <h3 class="section-title info-title">// 03. CORRECTIVE SYSTEM ACTION</h3>
+              <p class="section-text">{data.correction}</p>
+            </section>
+
+            <!-- 04. Engineering Lesson -->
+            <section class="dossier-section brutalist-box accent-box">
+              <h3 class="section-title accent-title">// 04. ENGINEERING LESSON ("FAILURE IS DATA")</h3>
+              <p class="section-text accent-text">{data.lesson}</p>
+            </section>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="dossier-sidebar brutalist-box">
+            <div class="sidebar-block">
+              <a href="/failures" class="brutalist-button back-btn">&larr; BACK TO INCIDENT ARCHIVE</a>
+            </div>
+          </aside>
+        </div>
+      </article>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import { trackEvent } from '@/lib/analytics';
+  const track = () => {
+    const path = window.location.pathname;
+    const parts = path.split('/');
+    const fId = parts[parts.length - 1] || 'unknown';
+    trackEvent('failure_opened', { failureId: fId });
+  };
+  document.addEventListener('DOMContentLoaded', track);
+  document.addEventListener('astro:page-load', track);
+</script>
+
+<style>
+  .dossier-page-container {
+    padding: var(--space-8) var(--space-6) var(--space-16);
+    background-color: var(--color-bg-primary);
+  }
+
+  .dossier-page-inner {
+    max-width: var(--max-width-site);
+    margin: 0 auto;
+  }
+
+  .failure-dossier-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .dossier-header {
+    border-color: var(--color-semantic-danger);
+    box-shadow: var(--shadow-hard-danger);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .header-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+  }
+
+  .danger-badge {
+    padding: 0.25rem 0.6rem;
+    background-color: var(--color-semantic-danger-dim);
+    color: var(--color-semantic-danger);
+    border: 1px solid var(--color-semantic-danger);
+    font-weight: 700;
+  }
+
+  .incident-id {
+    color: var(--color-text-muted);
+  }
+
+  .dossier-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-3xl);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  .status-bar-row {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    border-top: 1px solid #330000;
+    padding-top: var(--space-2);
+  }
+
+  .dossier-body-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-6);
+    align-items: flex-start;
+  }
+
+  @media (max-width: 900px) {
+    .dossier-body-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .dossier-main-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .dossier-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .section-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.08em;
+  }
+
+  .danger-title {
+    color: var(--color-semantic-danger);
+  }
+
+  .warning-title {
+    color: var(--color-semantic-warning);
+  }
+
+  .info-title {
+    color: var(--color-semantic-info);
+  }
+
+  .accent-title {
+    color: var(--color-accent-primary);
+  }
+
+  .section-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+
+  .warning-box {
+    border-color: var(--color-semantic-warning);
+  }
+
+  .warning-text {
+    color: var(--color-semantic-warning);
+  }
+
+  .accent-box {
+    border-color: var(--color-accent-primary);
+  }
+
+  .accent-text {
+    color: var(--color-accent-primary);
+    font-weight: 600;
+  }
+
+  .danger-text {
+    color: var(--color-semantic-danger);
+  }
+
+  .dossier-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-4));
+  }
+
+  .sidebar-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .sidebar-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-semantic-danger);
+    letter-spacing: 0.08em;
+  }
+
+  .mission-link-btn {
+    width: 100%;
+    border-color: var(--color-semantic-danger);
+    color: var(--color-dark-text);
+    text-align: center;
+    font-size: 0.75rem;
+  }
+
+  .mission-link-btn:hover {
+    background-color: var(--color-semantic-danger);
+    color: var(--color-bg-primary);
+  }
+
+  .back-btn {
+    width: 100%;
+    text-align: center;
+  }
+</style>

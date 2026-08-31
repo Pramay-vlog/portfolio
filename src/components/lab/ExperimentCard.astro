@@ -1,0 +1,194 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  experiment: CollectionEntry<'experiments'>;
+  index: number;
+}
+
+const { experiment, index } = Astro.props;
+const { data, id } = experiment;
+
+const expId = `EXP-${String(index + 1).padStart(3, '0')}`;
+
+const getStatusClass = (status: string) => {
+  switch (status) {
+    case 'COMPLETE':
+      return 'status-complete';
+    case 'TESTING':
+      return 'status-testing';
+    case 'RUNNING':
+      return 'status-running';
+    case 'FAILED':
+      return 'status-failed';
+    default:
+      return '';
+  }
+};
+---
+
+<article class="experiment-card brutalist-box">
+  <div class="exp-header-row">
+    <span class="exp-id-tag">{expId}</span>
+    <span class={`exp-status-badge ${getStatusClass(data.status)}`}>{data.status}</span>
+  </div>
+
+  <h3 class="exp-title">{data.title}</h3>
+
+  <div class="exp-section">
+    <div class="exp-label">// HYPOTHESIS</div>
+    <p class="exp-text">{data.hypothesis}</p>
+  </div>
+
+  <div class="exp-section">
+    <div class="exp-label">// METHOD</div>
+    <p class="exp-text">{data.method}</p>
+  </div>
+
+  <div class="exp-section">
+    <div class="exp-label">// RESULT</div>
+    <p class="exp-text result-highlight">{data.result}</p>
+  </div>
+
+  {
+    data.whatBroke && (
+      <div class="exp-section">
+        <div class="exp-label warning-label">// WHAT BROKE</div>
+        <p class="exp-text warning-text">{data.whatBroke}</p>
+      </div>
+    )
+  }
+
+  <div class="exp-section">
+    <div class="exp-label accent-label">// WHAT I LEARNED</div>
+    <p class="exp-text accent-text">{data.whatILearned}</p>
+  </div>
+
+  <div class="exp-card-footer">
+    <a href={`/lab/${id}`} class="brutalist-button open-exp-btn">
+      [ OPEN LAB RECORD ]
+    </a>
+  </div>
+</article>
+
+<style>
+  .experiment-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    background-color: var(--color-bg-secondary);
+    border: var(--border-subtle);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-hard-sm);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .experiment-card:hover {
+    border-color: var(--color-accent-primary);
+    transform: translate(-3px, -3px);
+    box-shadow: var(--shadow-hard-accent);
+  }
+
+  .exp-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+  }
+
+  .exp-id-tag {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .exp-status-badge {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    border-radius: 0 !important;
+  }
+
+  .status-complete {
+    color: var(--color-accent-primary);
+    background-color: var(--color-accent-dim);
+    border: 1px solid var(--color-accent-primary);
+  }
+
+  .status-testing {
+    color: var(--color-semantic-info);
+    background-color: rgba(0, 170, 255, 0.15);
+    border: 1px solid var(--color-semantic-info);
+  }
+
+  .status-running {
+    color: var(--color-semantic-warning);
+    background-color: rgba(255, 170, 0, 0.15);
+    border: 1px solid var(--color-semantic-warning);
+  }
+
+  .status-failed {
+    color: var(--color-semantic-danger);
+    background-color: var(--color-semantic-danger-dim);
+    border: 1px solid var(--color-semantic-danger);
+  }
+
+  .exp-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-xl);
+    font-weight: 900;
+    letter-spacing: -0.01em;
+  }
+
+  .exp-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .exp-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .warning-label {
+    color: var(--color-semantic-warning);
+  }
+
+  .accent-label {
+    color: var(--color-accent-primary);
+  }
+
+  .exp-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .result-highlight {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  .warning-text {
+    color: var(--color-semantic-warning);
+  }
+
+  .accent-text {
+    color: var(--color-accent-primary);
+  }
+
+  .exp-card-footer {
+    margin-top: var(--space-2);
+    border-top: 1px solid var(--border-color-subtle);
+    padding-top: var(--space-4);
+  }
+
+  .open-exp-btn {
+    width: 100%;
+  }
+</style>

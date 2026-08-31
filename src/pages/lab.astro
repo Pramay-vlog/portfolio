@@ -1,0 +1,437 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const experiments: CollectionEntry<"experiments">[] = await getCollection("experiments");
+const failures: CollectionEntry<"failures">[] = await getCollection("failures");
+
+const completedCount = experiments.filter((e) => e.data.status === "COMPLETE").length;
+const testingCount = experiments.filter((e) => e.data.status === "TESTING").length;
+const failedCount = failures.length;
+---
+
+<BaseLayout
+  title="AI LABORATORY // Empirical Research & Failures — PRAMAY USADADIYA"
+  description="Empirical AI engineering laboratory: experiments, hypothesis validation, and failure post-mortems ('Failure is Data')."
+  activeNav="LAB"
+>
+  <main class="lab-page-container">
+    <div class="lab-page-inner">
+      <!-- Lab Hero Header -->
+      <div class="lab-hero-block">
+        <div class="hero-tag">// AUTONOMOUS SYSTEMS &amp; EMPIRICAL RESEARCH</div>
+        <h1 class="hero-title">AI LABORATORY</h1>
+        <p class="hero-subtext">
+          Evaluating multi-agent reasoning loops, context window limits, schema-constrained tool dispatch, and hybrid RAG retrieval bounds.
+        </p>
+
+        <!-- Telemetry Bar -->
+        <div class="lab-telemetry-bar">
+          <div class="telemetry-item">
+            <span class="telemetry-val text-accent">{completedCount}</span>
+            <span class="telemetry-label">EXPERIMENTS PASSED</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="telemetry-val text-warning">{testingCount}</span>
+            <span class="telemetry-label">ACTIVE IN LAB</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="telemetry-val text-danger">{failedCount}</span>
+            <span class="telemetry-label">FAILURES LOGGED</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 01: EXPERIMENTS -->
+      <section class="lab-section">
+        <div class="section-title-bar">
+          <h2 class="section-heading">// 01. EXPERIMENTS &amp; HYPOTHESIS TESTING</h2>
+        </div>
+
+        <div class="experiments-grid">
+          {
+            experiments.map((exp, idx) => {
+              const expNum = String(idx + 1).padStart(3, '0');
+              const data = exp.data;
+              const slug = exp.id;
+
+              return (
+                <article class="exp-card brutalist-box">
+                  <div class="card-top-bar">
+                    <span class="exp-num">EXP {expNum}</span>
+                    <span class="status-pill">{data.status}</span>
+                  </div>
+
+                  <h3 class="card-title">{data.title}</h3>
+
+                  <div class="card-block">
+                    <span class="block-label">// HYPOTHESIS</span>
+                    <p class="block-text">{data.hypothesis}</p>
+                  </div>
+
+                  <div class="card-block">
+                    <span class="block-label">// RESULT</span>
+                    <p class="block-text">{data.result}</p>
+                  </div>
+
+                  {data.whatBroke && (
+                    <div class="card-block broke-block">
+                      <span class="block-label danger-text">// WHAT BROKE</span>
+                      <p class="block-text">{data.whatBroke}</p>
+                    </div>
+                  )}
+
+                  <div class="card-block lesson-block">
+                    <span class="block-label accent-text">// LESSON</span>
+                    <p class="block-text">{data.whatILearned}</p>
+                  </div>
+
+                  <div class="card-action">
+                    <a href={`/lab/${slug}`} class="brutalist-button link-btn">
+                      [ INSPECT EXPERIMENT &rarr; ]
+                    </a>
+                  </div>
+                </article>
+              );
+            })
+          }
+        </div>
+      </section>
+
+      <!-- SECTION 02: FAILURES ARCHIVE ("FAILURE IS DATA") -->
+      <section class="lab-section">
+        <div class="section-title-bar">
+          <h2 class="section-heading danger-heading">// 02. INCIDENT &amp; FAILURES ARCHIVE ("FAILURE IS DATA")</h2>
+        </div>
+
+        <div class="failures-grid">
+          {
+            failures.map((fail) => {
+              const data = fail.data;
+              const slug = fail.id;
+
+              return (
+                <article class="failure-card brutalist-box warning-box">
+                  <div class="card-top-bar">
+                    <span class="danger-text font-mono font-bold">// INCIDENT REPORT</span>
+                    <span class="status-pill danger-pill">{data.status}</span>
+                  </div>
+
+                  <h3 class="card-title">{data.title}</h3>
+
+                  <div class="card-block">
+                    <span class="block-label danger-text">// ROOT CAUSE</span>
+                    <p class="block-text">{data.cause}</p>
+                  </div>
+
+                  <div class="card-block">
+                    <span class="block-label">// CORRECTION APPLIED</span>
+                    <p class="block-text">{data.correction}</p>
+                  </div>
+
+                  <div class="card-block lesson-block">
+                    <span class="block-label accent-text">// ENGINEERING LESSON</span>
+                    <p class="block-text">{data.lesson}</p>
+                  </div>
+
+                  <div class="card-action">
+                    <a href={`/failures/${slug}`} class="brutalist-button link-btn">
+                      [ VIEW INCIDENT DOSSIER &rarr; ]
+                    </a>
+                  </div>
+                </article>
+              );
+            })
+          }
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import { gsap } from "@/lib/gsap";
+
+  const initLabAnimations = () => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (prefersReducedMotion) return;
+
+    gsap.fromTo(
+      ".exp-card, .failure-card",
+      { y: 20, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.4,
+        stagger: 0.08,
+        ease: "power2.out",
+        clearProps: "all",
+      }
+    );
+  };
+
+  document.addEventListener("astro:page-load", initLabAnimations);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initLabAnimations();
+  }
+</script>
+
+<style>
+  .lab-page-container {
+    padding: var(--space-12) var(--space-6) var(--space-16);
+    background-color: var(--color-bg-primary);
+  }
+
+  .lab-page-inner {
+    max-width: var(--max-width-site);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .lab-hero-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    border-bottom: 1px solid var(--border-color-subtle);
+    padding-bottom: var(--space-6);
+  }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+
+  .hero-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--color-text-primary);
+  }
+
+  .hero-subtext {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    color: var(--color-text-secondary);
+    max-width: 720px;
+    line-height: 1.5;
+  }
+
+  .lab-telemetry-bar {
+    display: flex;
+    gap: var(--space-8);
+    margin-top: var(--space-4);
+    font-family: var(--font-mono);
+  }
+
+  .telemetry-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .telemetry-val {
+    font-size: var(--font-size-2xl);
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .telemetry-label {
+    font-size: 0.65rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+  }
+
+  .text-accent { color: var(--color-accent-primary); }
+  .text-warning { color: var(--color-semantic-warning); }
+  .text-danger { color: var(--color-semantic-danger); }
+
+  .lab-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .section-title-bar {
+    border-bottom: 1px solid var(--border-color-strong);
+    padding-bottom: var(--space-2);
+  }
+
+  .section-heading {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.08em;
+    font-weight: 700;
+  }
+
+  .danger-heading {
+    color: var(--color-semantic-danger);
+  }
+
+  .experiments-grid, .failures-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .exp-card, .failure-card {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-strong);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .exp-card:hover {
+    border-color: var(--color-accent-primary);
+  }
+
+  .warning-box {
+    border-color: var(--color-semantic-warning);
+  }
+
+  .warning-box:hover {
+    border-color: var(--color-semantic-danger);
+  }
+
+  .card-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    border-bottom: 1px solid var(--border-color-subtle);
+    padding-bottom: var(--space-2);
+  }
+
+  .exp-num {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+  }
+
+  .status-pill {
+    color: var(--color-semantic-success);
+    border: 1px solid var(--color-semantic-success);
+    padding: 0.1rem 0.5rem;
+    font-weight: 700;
+    font-size: 0.65rem;
+  }
+
+  .danger-pill {
+    color: var(--color-semantic-danger);
+    border-color: var(--color-semantic-danger);
+  }
+
+  .card-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-xl);
+    font-weight: 900;
+    color: var(--color-text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .card-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .block-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .danger-text { color: #dc2626; font-weight: 700; }
+  .accent-text { color: var(--color-accent-primary); font-weight: 700; }
+
+  .block-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    line-height: 1.5;
+  }
+
+  .broke-block {
+    background-color: rgba(220, 38, 38, 0.06);
+    padding: var(--space-3);
+    border-left: 3px solid #dc2626;
+    border-top: 1px solid rgba(220, 38, 38, 0.2);
+    border-right: 1px solid rgba(220, 38, 38, 0.2);
+    border-bottom: 1px solid rgba(220, 38, 38, 0.2);
+  }
+
+  .lesson-block {
+    background-color: var(--color-accent-dim);
+    padding: var(--space-3);
+    border-left: 3px solid var(--color-accent-primary);
+    border-top: 1px solid var(--color-accent-glow);
+    border-right: 1px solid var(--color-accent-glow);
+    border-bottom: 1px solid var(--color-accent-glow);
+  }
+
+  .warning-box {
+    border: 1px solid #dc2626;
+    background-color: rgba(220, 38, 38, 0.03);
+  }
+
+  .warning-box:hover {
+    border-color: #dc2626;
+    box-shadow: 4px 4px 0px #dc2626;
+  }
+
+  .danger-pill {
+    color: #dc2626;
+    background-color: rgba(220, 38, 38, 0.1);
+    border: 1px solid #dc2626;
+    font-weight: 700;
+  }
+
+  .card-action {
+    margin-top: auto;
+    padding-top: var(--space-2);
+  }
+
+  .link-btn {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    font-size: var(--font-size-xs);
+  }
+
+  @media (max-width: 768px) {
+    .lab-page-container {
+      padding: var(--space-6) var(--space-4) var(--space-12);
+    }
+
+    .lab-page-inner {
+      gap: var(--space-6);
+    }
+
+    .experiments-grid, .failures-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .exp-card, .failure-card {
+      padding: var(--space-4);
+    }
+
+    .lab-telemetry-bar {
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+
+    .link-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

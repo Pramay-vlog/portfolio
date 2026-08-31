@@ -1,0 +1,271 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const projects: CollectionEntry<'projects'>[] = await getCollection('projects');
+---
+
+<BaseLayout
+  title="PROJECT MISSIONS // Engineering Archives — PRAMAY USADADIYA"
+  description="Declassified operational dossiers for AI engineering projects, clinical RAG systems, and production agent orchestrations."
+  activeNav="WORK"
+>
+  <main class="projects-page-container">
+    <div class="projects-page-inner">
+      <!-- Page Hero Header -->
+      <div class="projects-hero-block">
+        <div class="hero-tag">// FIELD OPERATIONS ARCHIVE</div>
+        <h1 class="hero-title">ENGINEERING MISSIONS</h1>
+        <p class="hero-subtext">
+          Operational dossiers documenting production AI systems, 2D topology blueprints, architectural trade-offs, and incident post-mortems.
+        </p>
+      </div>
+
+      <!-- Missions Grid -->
+      <div class="missions-grid">
+        {
+          projects.map((project, idx) => {
+            const missionNum = String(idx + 1).padStart(3, '0');
+            const data = project.data;
+            const slug = project.id;
+
+            return (
+              <article class="mission-card brutalist-box">
+                <div class="card-top-bar">
+                  <span class="mission-tag">MISSION {missionNum}</span>
+                  <span class="status-tag">{data.status}</span>
+                </div>
+
+                <h2 class="card-title">{data.title}</h2>
+                <div class="class-pill">{data.classification}</div>
+
+                <div class="card-section">
+                  <span class="section-label">// OBJECTIVE</span>
+                  <p class="section-text">{data.objective}</p>
+                </div>
+
+                <div class="card-section">
+                  <span class="section-label">// TECH SIGNALS</span>
+                  <div class="chips-row">
+                    {data.technologies.map((tech) => (
+                      <span class="tech-chip">{tech}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div class="card-action">
+                  <a href={`/projects/${slug}`} class="brutalist-button view-btn">
+                    [ OPEN MISSION DOSSIER &rarr; ]
+                  </a>
+                </div>
+              </article>
+            );
+          })
+        }
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import { gsap } from "@/lib/gsap";
+
+  const initMissionAnimations = () => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (prefersReducedMotion) return;
+
+    gsap.fromTo(
+      ".mission-card",
+      { y: 25, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.5,
+        stagger: 0.08,
+        ease: "power2.out",
+        clearProps: "all",
+      }
+    );
+  };
+
+  document.addEventListener("astro:page-load", initMissionAnimations);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initMissionAnimations();
+  }
+</script>
+
+<style>
+  .projects-page-container {
+    padding: var(--space-12) var(--space-6) var(--space-16);
+    background-color: var(--color-bg-primary);
+  }
+
+  .projects-page-inner {
+    max-width: var(--max-width-site);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .projects-hero-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    border-bottom: 1px solid var(--border-color-subtle);
+    padding-bottom: var(--space-6);
+  }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+
+  .hero-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--color-text-primary);
+  }
+
+  .hero-subtext {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    color: var(--color-text-secondary);
+    max-width: 720px;
+    line-height: 1.5;
+  }
+
+  .missions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .mission-card {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-strong);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .mission-card:hover {
+    border-color: var(--color-accent-primary);
+  }
+
+  .card-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    border-bottom: 1px solid var(--border-color-subtle);
+    padding-bottom: var(--space-2);
+  }
+
+  .mission-tag {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+  }
+
+  .status-tag {
+    color: var(--color-semantic-success);
+    border: 1px solid var(--color-semantic-success);
+    padding: 0.1rem 0.5rem;
+    font-weight: 700;
+    font-size: 0.65rem;
+  }
+
+  .card-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-2xl);
+    font-weight: 900;
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .class-pill {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-text-secondary);
+    border: 1px solid var(--border-color-strong);
+    padding: 0.2rem 0.6rem;
+    width: fit-content;
+  }
+
+  .card-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .section-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    line-height: 1.5;
+  }
+
+  .chips-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tech-chip {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-tertiary);
+    border: 1px solid var(--border-color-strong);
+    padding: 0.2rem 0.5rem;
+  }
+
+  .card-action {
+    margin-top: auto;
+    padding-top: var(--space-2);
+  }
+
+  .view-btn {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    font-size: var(--font-size-xs);
+  }
+
+  @media (max-width: 768px) {
+    .projects-page-container {
+      padding: var(--space-6) var(--space-4) var(--space-12);
+    }
+
+    .projects-page-inner {
+      gap: var(--space-6);
+    }
+
+    .missions-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .mission-card {
+      padding: var(--space-4);
+    }
+
+    .view-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

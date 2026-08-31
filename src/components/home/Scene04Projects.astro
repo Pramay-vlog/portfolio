@@ -1,0 +1,360 @@
+---
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+---
+
+<section class="scene-projects" id="scene-projects">
+  <div class="projects-inner">
+    <!-- Header -->
+    <div class="projects-header-block">
+      <div class="scene-tag">03 // FEATURED WORK</div>
+      <h2 class="projects-title">SYSTEMS BUILT FOR PRODUCTION</h2>
+      <p class="projects-subtitle">
+        Projects are not text-heavy cards. Each entry is an engineering mission designed to solve non-trivial scalability, retrieval, or agent orchestration challenges.
+      </p>
+    </div>
+
+    <!-- Mission Showcase Stack -->
+    <div class="missions-stack">
+      {
+        projects.map((project, idx) => {
+          const missionNum = String(idx + 1).padStart(2, '0');
+          const data = project.data;
+          const slug = project.id;
+
+          return (
+            <article class="mission-card brutalist-box" id={`mission-${missionNum}`}>
+              <div class="mission-card-inner">
+                {/* Meta Top Line */}
+                <div class="mission-top-bar">
+                  <span class="mission-num">MISSION {missionNum}</span>
+                  <span class="mission-class">{data.classification}</span>
+                  <span class="mission-status-pill">{data.status}</span>
+                </div>
+
+                {/* Main Content Grid */}
+                <div class="mission-content-grid">
+                  <div class="mission-left-col">
+                    <h3 class="mission-title">{data.title}</h3>
+                    
+                    <div class="objective-block">
+                      <span class="block-label">OBJECTIVE</span>
+                      <p class="objective-text">{data.objective}</p>
+                    </div>
+
+                    <div class="problem-block">
+                      <span class="block-label">ENGINEERING CHALLENGE</span>
+                      <p class="problem-text">{data.problem}</p>
+                    </div>
+                  </div>
+
+                  <div class="mission-right-col">
+                    <div class="decisions-block">
+                      <span class="block-label">KEY ARCHITECTURAL DECISIONS</span>
+                      <ul class="decisions-list">
+                        {data.decisions.map((dec) => (
+                          <li class="decision-item">
+                            <span class="dec-icon">&rarr;</span>
+                            <span class="dec-text">{dec}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div class="tech-stack-block">
+                      <span class="block-label">TECH SIGNALS</span>
+                      <div class="tech-chips-row">
+                        {data.technologies.map((tech) => (
+                          <span class="tech-chip">{tech}</span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div class="action-row">
+                      <a href={`/work/${slug}`} class="brutalist-button dossier-btn">
+                        VIEW MISSION DOSSIER &rarr;
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap, ScrollTrigger } from '@/lib/gsap';
+
+  const initMissionsScrollAnimation = () => {
+    const section = document.getElementById('scene-projects');
+    if (!section) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const missionCards = section.querySelectorAll('.mission-card');
+    if (!missionCards || missionCards.length === 0) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    missionCards.forEach((card) => {
+      gsap.fromTo(
+        card,
+        { opacity: 0, y: 35 },
+        {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            end: 'top 35%',
+            scrub: 0.6,
+          },
+          opacity: 1,
+          y: 0,
+          ease: 'power2.out',
+        }
+      );
+    });
+  };
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initMissionsScrollAnimation();
+  }
+  document.addEventListener('DOMContentLoaded', initMissionsScrollAnimation);
+  document.addEventListener('astro:page-load', initMissionsScrollAnimation);
+</script>
+
+<style>
+  .scene-projects {
+    padding: var(--space-16) var(--space-6);
+    background-color: var(--color-bg-primary);
+    border-bottom: 1px solid var(--border-color-subtle);
+  }
+
+  .projects-inner {
+    max-width: var(--max-width-site);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .projects-header-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .scene-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+
+  .projects-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--color-text-primary);
+  }
+
+  .projects-subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    color: var(--color-text-secondary);
+    max-width: 800px;
+  }
+
+  .missions-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .mission-card {
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--border-color-subtle);
+    padding: var(--space-8);
+  }
+
+  .mission-card:hover {
+    border-color: var(--color-accent-primary);
+  }
+
+  .mission-card-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .mission-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color-subtle);
+    padding-bottom: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+  }
+
+  .mission-num {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .mission-class {
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .mission-status-pill {
+    color: var(--color-semantic-success);
+    border: 1px solid var(--color-semantic-success);
+    padding: 0.15rem 0.6rem;
+    font-weight: 700;
+  }
+
+  .mission-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+  }
+
+  .mission-left-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .mission-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--color-text-primary);
+    line-height: 1;
+  }
+
+  .block-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    margin-bottom: var(--space-1);
+    display: block;
+  }
+
+  .objective-text {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .problem-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .mission-right-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    justify-content: space-between;
+  }
+
+  .decisions-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .decision-item {
+    display: flex;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+  }
+
+  .dec-icon {
+    color: var(--color-accent-primary);
+    font-family: var(--font-mono);
+  }
+
+  .tech-chips-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tech-chip {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-subtle);
+    padding: 0.25rem 0.6rem;
+  }
+
+  .action-row {
+    padding-top: var(--space-2);
+  }
+
+  .dossier-btn {
+    display: inline-block;
+    padding: 0.65rem 1.5rem;
+    font-size: var(--font-size-sm);
+  }
+
+  @media (max-width: 900px) {
+    .mission-content-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .scene-projects {
+      padding: var(--space-8) var(--space-4);
+    }
+
+    .projects-inner {
+      gap: var(--space-6);
+    }
+
+    .missions-stack {
+      gap: var(--space-6);
+    }
+
+    .mission-card {
+      padding: var(--space-4);
+    }
+
+    .mission-top-bar {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .mission-title {
+      font-size: clamp(1.75rem, 7vw, 2.5rem);
+    }
+
+    .dossier-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

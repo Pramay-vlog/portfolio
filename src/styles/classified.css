@@ -1,0 +1,74 @@
+/* Classified Archive Styles */
+
+.classified-doc {
+  background-color: var(--color-classified-bg);
+  color: var(--color-classified-text);
+  border: 1px solid var(--color-classified-red);
+  box-shadow: var(--shadow-hard-danger);
+  padding: 2rem;
+  font-family: var(--font-mono);
+  position: relative;
+  border-radius: 0 !important;
+}
+
+.classified-stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  border: 3px solid var(--color-classified-stamp);
+  color: var(--color-classified-stamp);
+  padding: 0.4rem 1rem;
+  font-weight: 900;
+  font-size: var(--font-size-md);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transform: rotate(-8deg);
+  user-select: none;
+  pointer-events: none;
+}
+
+.classified-header {
+  border-bottom: 1px solid var(--color-classified-red);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.classified-title {
+  color: var(--color-classified-red);
+  font-size: var(--font-size-xl);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.classified-meta-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: var(--font-size-xs);
+}
+
+.classified-meta-table td {
+  border: 1px solid #260000;
+  padding: 0.4rem 0.75rem;
+}
+
+.classified-meta-label {
+  color: var(--color-classified-red);
+  font-weight: 700;
+  width: 30%;
+}
+
+.classified-redacted {
+  background-color: #1a0000;
+  color: transparent;
+  user-select: none;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  padding: 0 0.35rem;
+}
+
+.classified-redacted:hover,
+.classified-redacted.revealed {
+  background-color: rgba(211, 0, 0, 0.2);
+  color: var(--color-classified-red);
+}

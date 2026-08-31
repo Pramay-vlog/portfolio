@@ -1,0 +1,137 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const { data, id } = project;
+
+const missionNum = `MISSION ${String(index + 1).padStart(3, '0')}`;
+const statusProgress = data.status === 'COMPLETE' ? '████████████ COMPLETE' : '██████░░░░░░ IN PROGRESS';
+---
+
+<article class="mission-card brutalist-box">
+  <div class="mission-top-bar">
+    <span class="mission-index-badge">{missionNum}</span>
+    <span class="mission-level-tag">{data.level}</span>
+  </div>
+
+  <h2 class="mission-title">{data.title}</h2>
+
+  <div class="mission-section">
+    <div class="section-label">OBJECTIVE</div>
+    <p class="section-text">{data.objective}</p>
+  </div>
+
+  <div class="mission-section">
+    <div class="section-label">STATUS</div>
+    <div class="status-progress-bar">{statusProgress}</div>
+  </div>
+
+  <div class="mission-section">
+    <div class="section-label">SYSTEM CLASS</div>
+    <div class="system-class-tags">{data.classification}</div>
+  </div>
+
+  <div class="mission-bottom-bar">
+    <a href={`/projects/${id}`} class="brutalist-button open-mission-btn">
+      [ OPEN MISSION ]
+    </a>
+  </div>
+</article>
+
+<style>
+  .mission-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    background-color: var(--color-bg-secondary);
+    border: var(--border-strong);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-hard-md);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .mission-card:hover {
+    border-color: var(--color-accent-primary);
+    transform: translate(-3px, -3px);
+    box-shadow: var(--shadow-hard-accent);
+  }
+
+  .mission-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+  }
+
+  .mission-index-badge {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .mission-level-tag {
+    color: var(--color-text-muted);
+  }
+
+  .mission-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-2xl);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+  }
+
+  .mission-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  .section-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .status-progress-bar {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.05em;
+    font-weight: 700;
+  }
+
+  .system-class-tags {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-tertiary);
+    border: 1px solid var(--border-color-strong);
+    padding: 0.35rem 0.6rem;
+    display: inline-block;
+  }
+
+  .mission-bottom-bar {
+    margin-top: var(--space-2);
+    border-top: 1px solid var(--border-color-subtle);
+    padding-top: var(--space-4);
+  }
+
+  .open-mission-btn {
+    width: 100%;
+  }
+</style>

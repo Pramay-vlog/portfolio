@@ -1,0 +1,240 @@
+---
+import { getCollection } from 'astro:content';
+
+const experiments = await getCollection('experiments');
+---
+
+<section class="scene-lab" id="scene-lab">
+  <div class="lab-inner">
+    <div class="lab-header">
+      <div class="scene-tag">08 // EMPIRICAL LABORATORY</div>
+      <h2 class="lab-title">LAB EXPERIMENTS &amp; HYPOTHESIS TESTING</h2>
+      <p class="lab-subtitle">
+        Evaluating multi-agent reasoning loops, context window limits, schema-constrained tool dispatch, and hybrid RAG retrieval bounds.
+      </p>
+    </div>
+
+    <!-- Experiments Grid -->
+    <div class="experiments-grid">
+      {
+        experiments.map((exp, idx) => {
+          const expNum = String(idx + 1).padStart(3, '0');
+          const data = exp.data;
+          const slug = exp.id;
+
+          return (
+            <article class="exp-card brutalist-box">
+              <div class="exp-top-bar">
+                <span class="exp-num">EXP {expNum}</span>
+                <span class="status-pill">{data.status}</span>
+              </div>
+
+              <h3 class="exp-title">{data.title}</h3>
+
+              <div class="exp-block">
+                <span class="block-label">// HYPOTHESIS</span>
+                <p class="block-text">{data.hypothesis}</p>
+              </div>
+
+              <div class="exp-block">
+                <span class="block-label">// RESULT</span>
+                <p class="block-text">{data.result}</p>
+              </div>
+
+              <div class="exp-footer-row">
+                <a href={`/lab/${slug}`} class="exp-read-link">
+                  [ INSPECT EXPERIMENT &rarr; ]
+                </a>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap, ScrollTrigger } from '@/lib/gsap';
+
+  const initLabScrollAnimation = () => {
+    const section = document.getElementById('scene-lab');
+    if (!section) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const cards = section.querySelectorAll('.exp-card');
+    if (!cards || cards.length === 0) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(
+      cards,
+      { opacity: 0, y: 30 },
+      {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          end: 'top 30%',
+          scrub: 0.6,
+        },
+        opacity: 1,
+        y: 0,
+        stagger: 0.15,
+        ease: 'power2.out',
+      }
+    );
+  };
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initLabScrollAnimation();
+  }
+  document.addEventListener('DOMContentLoaded', initLabScrollAnimation);
+  document.addEventListener('astro:page-load', initLabScrollAnimation);
+</script>
+
+<style>
+  .scene-lab {
+    padding: var(--space-16) var(--space-6);
+    background-color: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--border-color-subtle);
+  }
+
+  .lab-inner {
+    max-width: var(--max-width-site);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .lab-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .scene-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+
+  .lab-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--color-text-primary);
+  }
+
+  .lab-subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    color: var(--color-text-secondary);
+    max-width: 800px;
+  }
+
+  .experiments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .exp-card {
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--border-color-subtle);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .exp-card:hover {
+    border-color: var(--color-accent-primary);
+  }
+
+  .exp-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color-subtle);
+    padding-bottom: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+  }
+
+  .exp-num {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+  }
+
+  .status-pill {
+    color: var(--color-semantic-success);
+    border: 1px solid var(--color-semantic-success);
+    padding: 0.1rem 0.5rem;
+    font-weight: 700;
+    font-size: 0.65rem;
+  }
+
+  .exp-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-xl);
+    font-weight: 900;
+    color: var(--color-text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .exp-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .block-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .block-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    line-height: 1.5;
+  }
+
+  .exp-footer-row {
+    margin-top: auto;
+    padding-top: var(--space-2);
+  }
+
+  .exp-read-link {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    .scene-lab {
+      padding: var(--space-8) var(--space-4);
+    }
+
+    .lab-inner {
+      gap: var(--space-6);
+    }
+
+    .experiments-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .exp-card {
+      padding: var(--space-4);
+    }
+  }
+</style>

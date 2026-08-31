@@ -1,17 +1,40 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Scene01Identity from '../components/home/Scene01Identity.astro';
+import Scene02Hook from '../components/home/Scene02Hook.astro';
+import Scene03SystemWorld from '../components/home/Scene03SystemWorld.react';
+import Scene04Projects from '../components/home/Scene04Projects.astro';
+import Scene05Bosses from '../components/home/Scene05Bosses.react';
+import Scene06Experiments from '../components/home/Scene06Experiments.astro';
+import Scene07Progression from '../components/home/Scene07Progression.astro';
+import Scene08Lab from '../components/home/Scene08Lab.astro';
+import Scene09Final from '../components/home/Scene09Final.astro';
+import BeforeAfterReveal from '../components/home/BeforeAfterReveal.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="PRAMAY USADADIYA // AI Software Engineer & Systems Architect"
+  description="Pramay Usadadiya — Personal portfolio of an AI Software Engineer specializing in intelligent reasoning agents, grounded RAG architectures, and production backend systems."
+  activeNav=""
+>
+  <main id="main-content" class="homepage-main">
+    <Scene01Identity />
+    <Scene02Hook />
+    <Scene03SystemWorld client:visible />
+    <Scene04Projects />
+    <BeforeAfterReveal />
+    <Scene05Bosses client:visible />
+    <Scene06Experiments />
+    <Scene07Progression />
+    <Scene08Lab />
+    <Scene09Final />
+  </main>
+</BaseLayout>
+
+<style>
+  .homepage-main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+</style>

@@ -1,0 +1,882 @@
+---
+---
+
+<section class="before-after-section" id="before-after-scene">
+  <div class="before-after-container">
+    <!-- Header Block -->
+    <div class="scene-header-container">
+      <div class="header-top-row">
+        <span class="scene-tag">05 // ARCHITECTURE TRANSFORMATION</span>
+
+        <!-- Desktop Mode Selector Pills -->
+        <div class="mode-selector-group desktop-only-flex">
+          <button type="button" class="mode-btn is-active" data-mode="slider">COMPARE SPLIT</button>
+          <button type="button" class="mode-btn" data-mode="before">LEGACY SYSTEM</button>
+          <button type="button" class="mode-btn" data-mode="after">INTELLIGENT RAG</button>
+        </div>
+      </div>
+
+      <h2 class="scene-title">UNGROUNDED MONOLITH VS INTELLIGENT RAG</h2>
+      <p class="scene-desc">
+        Compare the architectural transformation from an ungrounded legacy monolith to a production intelligent multi-agent RAG system.
+      </p>
+    </div>
+
+    <!-- Dedicated Mobile Architecture View (rendered <= 768px) -->
+    <div class="mobile-before-after-view show-on-mobile-block">
+      <!-- Mobile Tab Controls -->
+      <div class="mobile-mode-tabs">
+        <button type="button" class="mobile-tab-btn is-active" data-tab="after">
+          <span class="badge-dot success-dot"></span> INTELLIGENT RAG
+        </button>
+        <button type="button" class="mobile-tab-btn" data-tab="before">
+          <span class="badge-dot danger-dot"></span> LEGACY MONOLITH
+        </button>
+        <button type="button" class="mobile-tab-btn" data-tab="diff">
+          &harr; METRIC DIFF
+        </button>
+      </div>
+
+      <!-- Mobile Architecture Cards -->
+      <div class="mobile-cards-container">
+        <!-- AFTER: Intelligent RAG Card -->
+        <div class="mobile-arch-card card-after is-active" id="mobile-card-after">
+          <div class="arch-card-header success-header">
+            <span class="arch-tag">SYSTEM 02 // PRODUCTION INTELLIGENT RAG</span>
+            <h3 class="arch-title">BOUNDED REASONING &amp; HYBRID RAG</h3>
+          </div>
+
+          <div class="arch-nodes-list">
+            <div class="arch-node-item brutalist-box">
+              <div class="node-num accent-text">01. ZOD SCHEMA GATEWAY</div>
+              <div class="node-body">Type-safe input parsing &bull; Rate-limited token bucket</div>
+            </div>
+
+            <div class="arch-node-item brutalist-box">
+              <div class="node-num accent-text">02. REACT AGENT LOOPS</div>
+              <div class="node-body">Bounded 5-step execution &bull; Self-correcting runtime</div>
+            </div>
+
+            <div class="arch-node-item brutalist-box">
+              <div class="node-num success-text">03. HYBRID RAG ENGINE</div>
+              <div class="node-body">BM25 + HNSW vector index &bull; Cross-encoder re-rank</div>
+            </div>
+          </div>
+
+          <div class="arch-metrics-banner success-banner brutalist-box">
+            <div class="metric-line main-metric success-text">140ms LATENCY &bull; 99.4% PRECISION</div>
+            <div class="metric-line sub-metric">0.0% Hallucination &bull; Episodic Vector Memory</div>
+          </div>
+        </div>
+
+        <!-- BEFORE: Legacy Monolith Card -->
+        <div class="mobile-arch-card card-before" id="mobile-card-before">
+          <div class="arch-card-header danger-header">
+            <span class="arch-tag">SYSTEM 01 // UNGUARDED MONOLITH</span>
+            <h3 class="arch-title">UNBOUNDED LOOPS &amp; HIGH LATENCY</h3>
+          </div>
+
+          <div class="arch-nodes-list">
+            <div class="arch-node-item brutalist-box">
+              <div class="node-num danger-text">01. UNCHECKED GATEWAY</div>
+              <div class="node-body">Zero input validation &bull; Raw prompt dispatch</div>
+            </div>
+
+            <div class="arch-node-item brutalist-box">
+              <div class="node-num danger-text">02. UNINDEXED DATABASE</div>
+              <div class="node-body">Full table scans (1200ms) &bull; Missing vector indexes</div>
+            </div>
+
+            <div class="arch-node-item brutalist-box">
+              <div class="node-num danger-text">03. RAW GENERATION</div>
+              <div class="node-body">34.0% hallucination rate &bull; Context window leaks</div>
+            </div>
+          </div>
+
+          <div class="arch-metrics-banner danger-banner brutalist-box">
+            <div class="metric-line main-metric danger-text">1200ms LATENCY &bull; 34% HALLUCINATION</div>
+            <div class="metric-line sub-metric">Unbounded reasoning loops &bull; Unchecked failures</div>
+          </div>
+        </div>
+
+        <!-- DIFF: Side-by-Side Metric Comparison Table Card -->
+        <div class="mobile-arch-card card-diff" id="mobile-card-diff">
+          <div class="arch-card-header accent-header">
+            <span class="arch-tag">// ARCHITECTURAL IMPACT SUMMARY</span>
+            <h3 class="arch-title">PRODUCTION METRIC COMPARISON</h3>
+          </div>
+
+          <div class="diff-table brutalist-box">
+            <div class="diff-row header-row">
+              <span>METRIC</span>
+              <span>LEGACY</span>
+              <span>RAG AGENT</span>
+            </div>
+            <div class="diff-row">
+              <span class="row-label">LATENCY</span>
+              <span class="danger-text">1200ms</span>
+              <span class="success-text">140ms (-88%)</span>
+            </div>
+            <div class="diff-row">
+              <span class="row-label">PRECISION</span>
+              <span class="danger-text">66.0%</span>
+              <span class="success-text">99.4% (+33%)</span>
+            </div>
+            <div class="diff-row">
+              <span class="row-label">HALLUCINATIONS</span>
+              <span class="danger-text">34.0%</span>
+              <span class="success-text">0.0% (ZERO)</span>
+            </div>
+            <div class="diff-row">
+              <span class="row-label">VALIDATION</span>
+              <span class="danger-text">NONE</span>
+              <span class="success-text">ZOD SCHEMA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop Dual Layer Interactive Reveal Canvas (rendered > 768px) -->
+    <div class="reveal-box brutalist-box desktop-only-box">
+      <!-- Top Status Pills Bar -->
+      <div class="reveal-box-header">
+        <div class="badge-pill badge-before">
+          <span class="badge-dot danger-dot"></span>
+          <span>LEGACY MONOLITH // UNGROUNDED</span>
+        </div>
+
+        <div class="canvas-drag-hint" id="canvas-drag-hint">
+          <span>&larr; DRAG CANVAS TO COMPARE &rarr;</span>
+        </div>
+
+        <div class="badge-pill badge-after">
+          <span class="badge-dot success-dot"></span>
+          <span>PRODUCTION // INTELLIGENT RAG</span>
+        </div>
+      </div>
+
+      <div class="image-reveal-wrapper" id="image-reveal-wrapper">
+        <!-- Base Layer: BEFORE (Legacy System) -->
+        <div class="image-layer layer-before">
+          <svg viewBox="0 0 1000 500" class="reveal-svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="before-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(217, 38, 56, 0.08)" stroke-width="1" />
+              </pattern>
+            </defs>
+            <rect width="1000" height="500" fill="#F8F5F0" />
+            <rect width="1000" height="500" fill="url(#before-grid)" />
+            <rect x="15" y="15" width="970" height="470" stroke="#D92638" stroke-width="2" stroke-dasharray="6 6" fill="none" />
+
+            <!-- Title Banner -->
+            <text x="45" y="60" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="900" fill="#111111">SYSTEM 01 // UNGUARDED MONOLITH ARCHITECTURE</text>
+            <text x="45" y="88" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#D92638">CRITICAL RISKS: HIGH LATENCY &bull; UNCHECKED HALLUCINATIONS &bull; UNBOUNDED LOOPS</text>
+
+            <!-- Node 1: Monolith API -->
+            <g transform="translate(45, 120)">
+              <rect width="270" height="140" fill="#FFFFFF" stroke="#111111" stroke-width="2" />
+              <rect width="270" height="28" fill="#111111" />
+              <text x="15" y="20" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#FFFFFF">01. API GATEWAY [UNCHECKED]</text>
+
+              <text x="15" y="60" font-family="Space Grotesk, sans-serif" font-size="16" font-weight="bold" fill="#111111">RAW PROMPT DISPATCH</text>
+              <text x="15" y="90" font-family="JetBrains Mono, monospace" font-size="12" fill="#D92638">&bull; Zero Zod Input Schema</text>
+              <text x="15" y="112" font-family="JetBrains Mono, monospace" font-size="12" fill="#555550">&bull; No Execution Budget</text>
+            </g>
+
+            <line x1="315" y1="190" x2="395" y2="190" stroke="#D92638" stroke-width="3" stroke-dasharray="4 4" />
+
+            <!-- Node 2: Database Monolith -->
+            <g transform="translate(395, 120)">
+              <rect width="270" height="140" fill="#FFFFFF" stroke="#D92638" stroke-width="2" />
+              <rect width="270" height="28" fill="#D92638" />
+              <text x="15" y="20" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#FFFFFF">02. UNINDEXED DATABASE</text>
+
+              <text x="15" y="60" font-family="Space Grotesk, sans-serif" font-size="16" font-weight="bold" fill="#111111">SQL MONOLITH SEARCH</text>
+              <text x="15" y="90" font-family="JetBrains Mono, monospace" font-size="12" fill="#D92638">&bull; Full Table Scan (1200ms)</text>
+              <text x="15" y="112" font-family="JetBrains Mono, monospace" font-size="12" fill="#555550">&bull; Missing HNSW Vector Index</text>
+            </g>
+
+            <line x1="665" y1="190" x2="745" y2="190" stroke="#D92638" stroke-width="3" stroke-dasharray="4 4" />
+
+            <!-- Node 3: LLM Output -->
+            <g transform="translate(745, 120)">
+              <rect width="210" height="140" fill="#FFFFFF" stroke="#111111" stroke-width="2" />
+              <rect width="210" height="28" fill="#111111" />
+              <text x="15" y="20" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#FFFFFF">03. RAW GENERATION</text>
+
+              <text x="15" y="60" font-family="Space Grotesk, sans-serif" font-size="15" font-weight="bold" fill="#111111">UNVERIFIED OUTPUT</text>
+              <text x="15" y="90" font-family="JetBrains Mono, monospace" font-size="12" fill="#D92638">&bull; 34% Hallucination</text>
+              <text x="15" y="112" font-family="JetBrains Mono, monospace" font-size="12" fill="#555550">&bull; No Re-Ranking</text>
+            </g>
+
+            <!-- Bottom Warning Metric Banner -->
+            <g transform="translate(45, 290)">
+              <rect width="910" height="170" fill="#FFF0F1" stroke="#D92638" stroke-width="2" />
+              <text x="30" y="45" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="900" fill="#D92638">CRITICAL FAILURE: UNBOUNDED REASONING LOOPS</text>
+              <text x="30" y="85" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#111111">Latency: 1200ms &bull; Hallucination Rate: 34.0% &bull; Recall Precision: 66.0%</text>
+              <text x="30" y="120" font-family="JetBrains Mono, monospace" font-size="13" fill="#555550">Context Window Exhaustion &bull; Missing Grounding Verification &bull; Memory Leak</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Overlapping Top Layer: AFTER (Intelligent System) -->
+        <div class="image-layer layer-after" id="layer-after">
+          <svg viewBox="0 0 1000 500" class="reveal-svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="after-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(0, 71, 171, 0.06)" stroke-width="1" />
+              </pattern>
+            </defs>
+            <rect width="1000" height="500" fill="#FFFFFF" />
+            <rect width="1000" height="500" fill="url(#after-grid)" />
+            <rect x="15" y="15" width="970" height="470" stroke="#0047AB" stroke-width="2" fill="none" />
+
+            <!-- Title Banner -->
+            <text x="45" y="60" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="900" fill="#111111">SYSTEM 02 // INTELLIGENT AGENT &amp; HYBRID RAG</text>
+            <text x="45" y="88" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#0047AB">PRODUCTION METRICS: 140ms LATENCY &bull; 99.4% PRECISION RECALL &bull; ZERO HALLUCINATIONS</text>
+
+            <!-- Node 1: Schema Gateway -->
+            <g transform="translate(45, 120)">
+              <rect width="270" height="140" fill="#FFFFFF" stroke="#0047AB" stroke-width="2" />
+              <rect width="270" height="28" fill="#0047AB" />
+              <text x="15" y="20" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#FFFFFF">01. ZOD SCHEMA GATEWAY</text>
+
+              <text x="15" y="60" font-family="Space Grotesk, sans-serif" font-size="16" font-weight="bold" fill="#111111">STRICT PARSING</text>
+              <text x="15" y="90" font-family="JetBrains Mono, monospace" font-size="12" fill="#0047AB">&bull; Type-Safe Input Validation</text>
+              <text x="15" y="112" font-family="JetBrains Mono, monospace" font-size="12" fill="#555550">&bull; Rate-Limited Token Bucket</text>
+            </g>
+
+            <line x1="315" y1="190" x2="395" y2="190" stroke="#0047AB" stroke-width="3" />
+
+            <!-- Node 2: AI Orchestrator -->
+            <g transform="translate(395, 120)">
+              <rect width="270" height="140" fill="#FFFFFF" stroke="#111111" stroke-width="2" />
+              <rect width="270" height="28" fill="#111111" />
+              <text x="15" y="20" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#FFFFFF">02. REACT AGENT LOOPS</text>
+
+              <text x="15" y="60" font-family="Space Grotesk, sans-serif" font-size="16" font-weight="bold" fill="#111111">REASONING DISPATCH</text>
+              <text x="15" y="90" font-family="JetBrains Mono, monospace" font-size="12" fill="#0047AB">&bull; Bounded 5-Step Execution</text>
+              <text x="15" y="112" font-family="JetBrains Mono, monospace" font-size="12" fill="#555550">&bull; Self-Correcting Runtime</text>
+            </g>
+
+            <line x1="665" y1="190" x2="745" y2="190" stroke="#0047AB" stroke-width="3" />
+
+            <!-- Node 3: Hybrid RAG -->
+            <g transform="translate(745, 120)">
+              <rect width="210" height="140" fill="#FFFFFF" stroke="#059669" stroke-width="2" />
+              <rect width="210" height="28" fill="#059669" />
+              <text x="15" y="20" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#FFFFFF">03. HYBRID RAG</text>
+
+              <text x="15" y="60" font-family="Space Grotesk, sans-serif" font-size="15" font-weight="bold" fill="#111111">BM25 + HNSW VECTOR</text>
+              <text x="15" y="90" font-family="JetBrains Mono, monospace" font-size="12" fill="#059669">&bull; Cross-Encoder Re-Rank</text>
+              <text x="15" y="112" font-family="JetBrains Mono, monospace" font-size="12" fill="#555550">&bull; Context Pruning Active</text>
+            </g>
+
+            <!-- Bottom Success Metric Banner -->
+            <g transform="translate(45, 290)">
+              <rect width="910" height="170" fill="#F0FDF4" stroke="#059669" stroke-width="2" />
+              <text x="30" y="45" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="900" fill="#059669">OPTIMIZED: 99.4% GROUNDED RECALL PRECISION</text>
+              <text x="30" y="85" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#111111">Latency: 140ms &bull; Hallucinations: 0.0% &bull; Recall Precision: 99.4%</text>
+              <text x="30" y="120" font-family="JetBrains Mono, monospace" font-size="13" fill="#555550">Episodic Vector Memory &bull; Verified Output Validation &bull; Production Deployed</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Vertical Scrub Line Indicator -->
+        <div class="scrub-divider" id="scrub-divider">
+          <div class="scrub-handle">
+            <span>&larr; &rarr;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls & Live Metrics Bar -->
+      <div class="reveal-controls-bar">
+        <div class="slider-box">
+          <span class="slider-label">SLIDER REVEAL:</span>
+          <input type="range" id="reveal-range-input" min="0" max="100" value="50" class="reveal-input" />
+        </div>
+
+        <div class="metrics-summary-row">
+          <div class="metric-block">
+            <span class="m-title">SYSTEM LATENCY</span>
+            <span class="m-value success" id="m-latency">670ms</span>
+          </div>
+          <div class="metric-block">
+            <span class="m-title">PRECISION RECALL</span>
+            <span class="m-value success" id="m-precision">82.7%</span>
+          </div>
+          <div class="metric-block">
+            <span class="m-title">HALLUCINATION RATE</span>
+            <span class="m-value success" id="m-hallucination">17.0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from '@/lib/gsap';
+
+  const initBeforeAfterScene = () => {
+    const section = document.getElementById('before-after-scene');
+    const wrapper = document.getElementById('image-reveal-wrapper');
+    const afterLayer = document.getElementById('layer-after');
+    const divider = document.getElementById('scrub-divider');
+    const rangeInput = document.getElementById('reveal-range-input') as HTMLInputElement | null;
+    const modeBtns = section?.querySelectorAll('.mode-btn');
+
+    const valLatency = document.getElementById('m-latency');
+    const valPrecision = document.getElementById('m-precision');
+    const valHallucination = document.getElementById('m-hallucination');
+
+    if (!section) return;
+
+    // Mobile Tab Switcher Logic
+    const mobileTabs = section.querySelectorAll('.mobile-tab-btn');
+    const mobileCards = section.querySelectorAll('.mobile-arch-card');
+
+    mobileTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        mobileTabs.forEach((t) => t.classList.remove('is-active'));
+        tab.classList.add('is-active');
+
+        const targetTab = tab.getAttribute('data-tab');
+        mobileCards.forEach((card) => {
+          if (card.id === `mobile-card-${targetTab}`) {
+            card.classList.add('is-active');
+          } else {
+            card.classList.remove('is-active');
+          }
+        });
+      });
+    });
+
+    if (!wrapper || !afterLayer) return;
+
+    let isDragging = false;
+
+    const setProgress = (pct: number) => {
+      const clamped = Math.max(0, Math.min(100, pct));
+      const polygonStr = `polygon(0% 0%, ${clamped}% 0%, ${clamped}% 100%, 0% 100%)`;
+
+      afterLayer.style.clipPath = polygonStr;
+      (afterLayer.style as any).webkitClipPath = polygonStr;
+
+      if (divider) {
+        divider.style.left = `${clamped}%`;
+      }
+
+      if (rangeInput) {
+        rangeInput.value = String(Math.round(clamped));
+      }
+
+      // Update metrics
+      if (valLatency) {
+        const latency = Math.round(1200 - (1200 - 140) * (clamped / 100));
+        valLatency.textContent = `${latency}ms`;
+        valLatency.className = `m-value ${clamped > 50 ? 'success' : 'danger'}`;
+      }
+
+      if (valPrecision) {
+        const precision = (66.0 + (99.4 - 66.0) * (clamped / 100)).toFixed(1);
+        valPrecision.textContent = `${precision}%`;
+      }
+
+      if (valHallucination) {
+        const hallucination = (34.0 * (1 - clamped / 100)).toFixed(1);
+        valHallucination.textContent = `${hallucination}%`;
+        valHallucination.className = `m-value ${clamped > 50 ? 'success' : 'danger'}`;
+      }
+    };
+
+    // Initialize to 50% split view
+    setProgress(50);
+
+    // Direct Canvas Drag & Click Handler
+    const updateProgressFromEvent = (e: MouseEvent | TouchEvent) => {
+      const rect = wrapper.getBoundingClientRect();
+      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      const xOffset = clientX - rect.left;
+      const pct = (xOffset / rect.width) * 100;
+      setProgress(pct);
+    };
+
+    wrapper.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      updateProgressFromEvent(e);
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (isDragging) updateProgressFromEvent(e);
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    wrapper.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      updateProgressFromEvent(e);
+    }, { passive: true });
+
+    wrapper.addEventListener('touchmove', (e) => {
+      if (isDragging) updateProgressFromEvent(e);
+    }, { passive: true });
+
+    wrapper.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // Range Input Slider Handler
+    rangeInput?.addEventListener('input', (e) => {
+      const val = Number((e.target as HTMLInputElement).value);
+      setProgress(val);
+    });
+
+    // Mode Toggle Buttons
+    modeBtns?.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        modeBtns.forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+
+        const mode = btn.getAttribute('data-mode');
+        let targetPct = 50;
+        if (mode === 'before') targetPct = 0;
+        if (mode === 'after') targetPct = 100;
+
+        const currentVal = Number(rangeInput?.value || 50);
+        gsap.to({ p: currentVal }, {
+          p: targetPct,
+          duration: 0.4,
+          ease: 'power2.out',
+          onUpdate: function () { setProgress(this.targets()[0].p); }
+        });
+      });
+    });
+  };
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initBeforeAfterScene();
+  }
+  document.addEventListener('DOMContentLoaded', initBeforeAfterScene);
+  document.addEventListener('astro:page-load', initBeforeAfterScene);
+</script>
+
+<style>
+  .before-after-section {
+    padding: var(--space-16) var(--space-6);
+    background-color: var(--color-bg-primary);
+    border-bottom: 1px solid var(--border-color-subtle);
+  }
+
+  .before-after-container {
+    max-width: var(--max-width-site);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .scene-header-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .header-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .scene-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+
+  .mode-selector-group {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .mode-btn {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-subtle);
+    padding: 0.35rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .mode-btn:hover {
+    color: var(--color-text-primary);
+    border-color: var(--color-accent-primary);
+  }
+
+  .mode-btn.is-active {
+    color: #ffffff;
+    background-color: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+  }
+
+  .scene-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--color-text-primary);
+    line-height: 1.1;
+  }
+
+  .scene-desc {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    max-width: 800px;
+  }
+
+  /* Mobile Dedicated View Styles */
+  .mobile-before-after-view {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .mobile-mode-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .mobile-tab-btn {
+    flex: 1;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-subtle);
+    padding: 0.5rem 0.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    white-space: nowrap;
+  }
+
+  .mobile-tab-btn.is-active {
+    color: #ffffff;
+    background-color: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+  }
+
+  .mobile-arch-card {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-4);
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--border-color-strong);
+    padding: var(--space-4);
+  }
+
+  .mobile-arch-card.is-active {
+    display: flex;
+  }
+
+  .arch-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    border-bottom: 1px solid var(--border-color-subtle);
+    padding-bottom: var(--space-3);
+  }
+
+  .arch-tag {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.08em;
+    font-weight: 700;
+  }
+
+  .success-header .arch-tag { color: var(--color-semantic-success); }
+  .danger-header .arch-tag { color: var(--color-semantic-danger); }
+  .accent-header .arch-tag { color: var(--color-accent-primary); }
+
+  .arch-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-lg);
+    font-weight: 900;
+    color: var(--color-text-primary);
+  }
+
+  .arch-nodes-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .arch-node-item {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-subtle);
+    padding: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .node-num {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+  }
+
+  .node-body {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+  }
+
+  .arch-metrics-banner {
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .main-metric {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-md);
+    font-weight: 900;
+  }
+
+  .sub-metric {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+  }
+
+  .diff-table {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color-strong);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .diff-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    padding: 0.6rem var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    border-bottom: 1px solid var(--border-color-subtle);
+  }
+
+  .diff-row:last-child {
+    border-bottom: none;
+  }
+
+  .diff-row.header-row {
+    font-weight: 700;
+    color: var(--color-accent-primary);
+    background-color: var(--color-bg-tertiary);
+  }
+
+  .row-label {
+    color: var(--color-text-primary);
+    font-weight: 700;
+  }
+
+  .reveal-box {
+    padding: var(--space-4);
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--border-color-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .reveal-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--border-color-subtle);
+  }
+
+  .badge-pill {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0.3rem 0.8rem;
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-subtle);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  .canvas-drag-hint {
+    background-color: rgba(17, 17, 17, 0.05);
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    padding: 0.3rem 0.8rem;
+    letter-spacing: 0.08em;
+    border: 1px solid var(--border-color-subtle);
+  }
+
+  .image-reveal-wrapper {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    border: 2px solid var(--border-color-strong);
+    background-color: var(--color-bg-secondary);
+    overflow: hidden;
+    cursor: ew-resize;
+    user-select: none;
+  }
+
+  .image-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .layer-before {
+    z-index: 1;
+  }
+
+  .layer-after {
+    z-index: 2;
+    clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+    -webkit-clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+  }
+
+  .reveal-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 50%;
+  }
+
+  .danger-dot { background-color: var(--color-semantic-danger); }
+  .success-dot { background-color: var(--color-semantic-success); }
+
+  .scrub-divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    background-color: var(--color-accent-primary);
+    z-index: 20;
+    transform: translateX(-50%);
+    pointer-events: none;
+    box-shadow: 0 0 12px rgba(0, 71, 171, 0.6);
+  }
+
+  .scrub-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    background-color: var(--color-accent-primary);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    font-size: var(--font-size-xs);
+    box-shadow: var(--shadow-hard-sm);
+  }
+
+  .reveal-controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    border-top: 1px solid var(--border-color-subtle);
+    padding-top: var(--space-4);
+  }
+
+  .slider-box {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .slider-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    font-weight: 700;
+  }
+
+  .reveal-input {
+    width: 220px;
+    accent-color: var(--color-accent-primary);
+    cursor: pointer;
+  }
+
+  .metrics-summary-row {
+    display: flex;
+    gap: var(--space-8);
+  }
+
+  .metric-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .m-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+
+  .m-value {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-xl);
+    font-weight: 800;
+  }
+
+  .m-value.danger { color: var(--color-semantic-danger); }
+  .m-value.success { color: var(--color-semantic-success); }
+
+  @media (max-width: 768px) {
+    .before-after-section {
+      padding: var(--space-8) var(--space-4);
+    }
+
+    .desktop-only-flex,
+    .desktop-only-box {
+      display: none !important;
+    }
+
+    .mobile-before-after-view {
+      display: flex;
+    }
+  }
+</style>

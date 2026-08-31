@@ -1,0 +1,299 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const experiments = await getCollection('experiments');
+  return experiments.map((experiment: CollectionEntry<'experiments'>) => ({
+    params: { id: experiment.id },
+    props: { experiment },
+  }));
+}
+
+type Props = {
+  experiment: CollectionEntry<'experiments'>;
+};
+
+const { experiment } = Astro.props as Props;
+const { data, id } = experiment;
+const { Content } = await render(experiment);
+---
+
+<BaseLayout
+  title={`${data.title} // Research Record — PRAMAY USADADIYA`}
+  description={data.hypothesis}
+  activeNav="LAB"
+>
+  <main class="lab-record-container">
+    <article class="lab-record-inner">
+      <!-- Record Header -->
+      <header class="record-header brutalist-box">
+        <div class="header-meta-row">
+          <span class="meta-tag">// RESEARCH & LAB RECORD</span>
+          <span class="record-id">ID: {id.toUpperCase()}</span>
+        </div>
+        <h1 class="record-title">{data.title}</h1>
+        <div class="status-row">
+          <span class="status-label">STATUS:</span>
+          <span class="status-pill">{data.status}</span>
+        </div>
+      </header>
+
+      <!-- Main Report Body Grid -->
+      <div class="record-body-grid">
+        <div class="record-main-col">
+          <!-- 01. Hypothesis -->
+          <section class="record-section brutalist-box">
+            <h3 class="section-title">// 01. HYPOTHESIS</h3>
+            <p class="section-text">{data.hypothesis}</p>
+          </section>
+
+          <!-- 02. Method -->
+          <section class="record-section brutalist-box">
+            <h3 class="section-title">// 02. EXPERIMENTAL METHOD</h3>
+            <p class="section-text">{data.method}</p>
+          </section>
+
+          <!-- 03. Result -->
+          <section class="record-section brutalist-box">
+            <h3 class="section-title">// 03. EMPIRICAL RESULT</h3>
+            <p class="section-text font-semibold">{data.result}</p>
+          </section>
+
+          <!-- 04. What Broke -->
+          {
+            data.whatBroke && (
+              <section class="record-section brutalist-box warning-box">
+                <h3 class="section-title warning-title">// 04. WHAT BROKE / FAILURE MODE</h3>
+                <p class="section-text danger-text">{data.whatBroke}</p>
+              </section>
+            )
+          }
+
+          <!-- 05. What I Learned -->
+          <section class="record-section brutalist-box">
+            <h3 class="section-title accent-title">// 05. WHAT I LEARNED</h3>
+            <p class="section-text accent-text">{data.whatILearned}</p>
+          </section>
+
+          <!-- Content markdown rendering if available -->
+          {Content && (
+            <section class="record-section brutalist-box markdown-content">
+              <Content />
+            </section>
+          )}
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="record-sidebar brutalist-box">
+          {
+            data.relatedProjects && data.relatedProjects.length > 0 && (
+              <div class="sidebar-block">
+                <h4 class="sidebar-title">// RELATED MISSIONS</h4>
+                <div class="related-projects-list">
+                  {data.relatedProjects.map((pId: string) => (
+                    <a href={`/projects/${pId}`} class="related-project-link">
+                      &rarr; MISSION: {pId.toUpperCase()}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )
+          }
+
+          <div class="sidebar-block">
+            <a href="/lab" class="brutalist-button back-btn">&larr; BACK TO LAB INDEX</a>
+          </div>
+        </aside>
+      </div>
+    </article>
+  </main>
+</BaseLayout>
+
+<script>
+  import { trackEvent } from '@/lib/analytics';
+  const track = () => {
+    const path = window.location.pathname;
+    const parts = path.split('/');
+    const expId = parts[parts.length - 1] || 'unknown';
+    trackEvent('experiment_opened', { experimentId: expId });
+  };
+  document.addEventListener('DOMContentLoaded', track);
+  document.addEventListener('astro:page-load', track);
+</script>
+
+<style>
+  .lab-record-container {
+    padding: var(--space-8) var(--space-6) var(--space-16);
+    background-color: var(--color-bg-primary);
+  }
+
+  .lab-record-inner {
+    max-width: var(--max-width-site);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .record-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-strong);
+    padding: var(--space-6);
+  }
+
+  .header-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+  }
+
+  .meta-tag {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+  }
+
+  .record-id {
+    color: var(--color-text-muted);
+  }
+
+  .record-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .status-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    border-top: 1px solid var(--border-color-subtle);
+    padding-top: var(--space-3);
+  }
+
+  .status-label {
+    color: var(--color-text-muted);
+  }
+
+  .status-pill {
+    color: var(--color-semantic-success);
+    border: 1px solid var(--color-semantic-success);
+    padding: 0.1rem 0.5rem;
+    font-weight: 700;
+  }
+
+  .record-body-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-6);
+    align-items: flex-start;
+  }
+
+  @media (max-width: 900px) {
+    .record-body-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .record-main-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .record-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-strong);
+    padding: var(--space-6);
+  }
+
+  .section-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.08em;
+    font-weight: 700;
+  }
+
+  .section-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+
+  .warning-box {
+    border-color: var(--color-semantic-warning);
+  }
+
+  .warning-title {
+    color: var(--color-semantic-warning);
+  }
+
+  .danger-text {
+    color: var(--color-semantic-danger);
+  }
+
+  .accent-title {
+    color: var(--color-accent-primary);
+  }
+
+  .accent-text {
+    color: var(--color-accent-primary);
+  }
+
+  .record-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-strong);
+    padding: var(--space-6);
+  }
+
+  .sidebar-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .sidebar-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.08em;
+  }
+
+  .related-projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .related-project-link {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--color-accent-primary);
+    text-decoration: none;
+    display: block;
+  }
+
+  .back-btn {
+    width: 100%;
+    text-align: center;
+    font-size: var(--font-size-xs);
+  }
+</style>

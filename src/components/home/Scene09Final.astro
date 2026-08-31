@@ -1,0 +1,180 @@
+---
+---
+
+<section class="scene-final" id="scene-final">
+  <div class="final-inner">
+    <div class="final-label">09 // CONTACT &amp; DIRECTORY</div>
+
+    <div class="final-statement-block">
+      <h2 class="final-hero-title">
+        <span class="title-line">LET'S BUILD</span>
+        <span class="title-line accent-text">SOMETHING DIFFICULT.</span>
+      </h2>
+    </div>
+
+    <!-- Direct Action Triggers Grid -->
+    <div class="final-actions-grid">
+      <a href="mailto:upramay@gmail.com" class="action-card brutalist-box" target="_blank" rel="noopener noreferrer">
+        <div class="card-meta">DIRECT EMAIL</div>
+        <div class="card-title">upramay@gmail.com</div>
+        <div class="card-desc">Initiate technical discussion, system architecture inquiries, or senior roles.</div>
+      </a>
+
+      <a href="https://www.linkedin.com/in/pramay-usdadiya/" class="action-card brutalist-box" target="_blank" rel="noopener noreferrer">
+        <div class="card-meta">LINKEDIN</div>
+        <div class="card-title">linkedin.com</div>
+        <div class="card-desc">Professional background, network, and career timeline.</div>
+      </a>
+
+      <!-- <a href="https://github.com" class="action-card brutalist-box" target="_blank" rel="noopener noreferrer">
+        <div class="card-meta">GITHUB</div>
+        <div class="card-title">github.com/pramay</div>
+        <div class="card-desc">Open-source code, AI experiments, and repository archives.</div>
+      </a> -->
+
+      <a href="/contact" class="action-card brutalist-box highlight-card">
+        <div class="card-meta accent-text">CONTACT PORTAL</div>
+        <div class="card-title accent-text">FULL CONTACT &amp; DOSSIER &rarr;</div>
+        <div class="card-desc">Full verified engineering dossier, capabilities, and system records.</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap, ScrollTrigger } from '@/lib/gsap';
+
+  const initFinalScrollAnimation = () => {
+    const section = document.getElementById('scene-final');
+    if (!section) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const lines = section.querySelectorAll('.title-line');
+    const cards = section.querySelectorAll('.action-card');
+
+    if (!lines.length || !cards.length) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 75%',
+        end: 'top 25%',
+        scrub: 0.8,
+      },
+    });
+
+    tl.fromTo(lines, { opacity: 0, y: 40 }, { opacity: 1, y: 0, stagger: 0.15, ease: 'power2.out' })
+      .fromTo(cards, { opacity: 0, y: 30 }, { opacity: 1, y: 0, stagger: 0.1, ease: 'power2.out' }, '-=0.2');
+  };
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initFinalScrollAnimation();
+  }
+  document.addEventListener('DOMContentLoaded', initFinalScrollAnimation);
+  document.addEventListener('astro:page-load', initFinalScrollAnimation);
+</script>
+
+<style>
+  .scene-final {
+    min-height: 85vh;
+    padding: var(--space-16) var(--space-6);
+    background-color: var(--color-bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .final-inner {
+    max-width: var(--max-width-site);
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .final-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+
+  .final-statement-block {
+    width: 100%;
+  }
+
+  .final-hero-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.5rem, 9vw, 8.5rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--color-text-primary);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title-line {
+    display: block;
+  }
+
+  .accent-text {
+    color: var(--color-accent-primary);
+  }
+
+  .final-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+    border-top: 1px solid var(--border-color-subtle);
+    padding-top: var(--space-8);
+  }
+
+  .action-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    text-decoration: none;
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--border-color-subtle);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .action-card:hover {
+    border-color: var(--color-accent-primary);
+    transform: translateY(-3px);
+  }
+
+  .highlight-card {
+    border-color: var(--color-accent-primary);
+    box-shadow: var(--shadow-hard-accent);
+  }
+
+  .card-meta {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .card-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-md);
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  .card-desc {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+  }
+</style>

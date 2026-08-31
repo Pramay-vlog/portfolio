@@ -1,0 +1,11 @@
+---
+import BrutalistNav from './BrutalistNav.astro';
+
+interface Props {
+  activeNav?: string;
+}
+
+const { activeNav = '' } = Astro.props;
+---
+
+<BrutalistNav activeNav={activeNav} />

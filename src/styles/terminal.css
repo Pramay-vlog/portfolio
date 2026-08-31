@@ -1,0 +1,293 @@
+/* Terminal Island CSS */
+
+.term-island-wrapper {
+  background-color: #060608;
+  border: 1px solid var(--color-accent-primary);
+  box-shadow: var(--shadow-hard-accent);
+  font-family: var(--font-mono);
+  color: var(--color-text-primary);
+  display: flex;
+  flex-direction: column;
+  min-height: 540px;
+  cursor: text;
+  border-radius: 0 !important;
+}
+
+.term-island-header {
+  background-color: #101015;
+  border-bottom: 1px solid var(--color-accent-primary);
+  padding: 0.6rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.08em;
+}
+
+.term-island-title {
+  color: var(--color-accent-primary);
+  font-weight: 700;
+}
+
+.term-island-badge {
+  color: var(--color-accent-primary);
+  background-color: var(--color-accent-dim);
+  border: 1px solid var(--color-accent-primary);
+  padding: 0.15rem 0.5rem;
+  font-size: 0.65rem;
+}
+
+.term-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow-y: auto;
+  max-height: 650px;
+}
+
+.term-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.term-prompt-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+}
+
+.term-user-prompt {
+  color: var(--color-accent-primary);
+}
+
+.term-cmd-text {
+  color: #ffffff;
+}
+
+.term-output {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  padding-left: 0.5rem;
+}
+
+.term-input-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.term-input-field {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  outline: none;
+}
+
+@media (max-width: 640px) {
+  .term-input-field {
+    font-size: 16px;
+  }
+  .term-island-wrapper {
+    min-height: 440px;
+  }
+  .term-body {
+    padding: 0.75rem;
+  }
+}
+
+.term-cmd-highlight {
+  color: var(--color-accent-primary);
+  font-weight: 700;
+}
+
+.term-link {
+  color: var(--color-accent-primary);
+  text-decoration: underline;
+}
+
+.term-output-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.term-output-head {
+  color: var(--color-accent-primary);
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-color-subtle);
+  padding-bottom: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.term-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-xs);
+}
+
+.term-table td {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #1a1a24;
+}
+
+.term-td-cmd {
+  color: var(--color-accent-primary);
+  font-weight: 700;
+  width: 140px;
+}
+
+.term-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.term-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.term-item-title {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.term-item-sub {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.term-dim {
+  color: var(--color-text-muted);
+}
+
+.term-code-block {
+  background-color: #101015;
+  border: 1px solid var(--border-color-strong);
+  padding: 0.6rem;
+  color: var(--color-accent-primary);
+}
+
+.term-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.term-skill-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.term-bullet-list {
+  list-style: none;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.warning-text {
+  color: var(--color-semantic-warning);
+}
+
+.warning-link {
+  color: var(--color-semantic-warning);
+}
+
+.danger-text {
+  color: var(--color-semantic-danger);
+}
+
+.term-mobile-helpers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: var(--space-2);
+  border-top: 1px dashed var(--border-color-strong);
+  padding-top: var(--space-2);
+}
+
+.helper-cmd-btn {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-accent-primary);
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color-strong);
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+  min-height: 38px;
+}
+
+.helper-cmd-btn:hover {
+  background-color: var(--color-accent-dim);
+  border-color: var(--color-accent-primary);
+}
+
+/* Secret Terminal Modal Overlay */
+.secret-terminal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+.secret-terminal-modal {
+  width: 100%;
+  max-width: 900px;
+  max-height: 85vh;
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-accent-primary);
+  box-shadow: var(--shadow-hard-accent);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-accent-primary);
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+}
+
+.modal-title {
+  color: var(--color-accent-primary);
+  font-weight: 700;
+}
+
+.close-btn {
+  color: var(--color-text-muted);
+  background: transparent;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: var(--color-semantic-danger);
+}
+
+.modal-terminal-container {
+  flex: 1;
+  overflow: hidden;
+}

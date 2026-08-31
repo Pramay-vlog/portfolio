@@ -1,0 +1,90 @@
+---
+interface Props {
+  architecture: string;
+}
+
+const { architecture } = Astro.props;
+const steps = architecture.split('->').map((s) => s.trim());
+---
+
+<section class="dossier-section brutalist-box">
+  <h3 class="section-title">// SYSTEM ARCHITECTURE PIPELINE</h3>
+  <div class="arch-pipeline-wrap">
+    <div class="arch-raw-string">{architecture}</div>
+    {
+      steps.length > 1 && (
+        <div class="arch-flow-diagram">
+          {steps.map((step, idx) => (
+            <div class="arch-node-chip">
+              <span class="step-num">0{idx + 1}</span>
+              <span class="step-text">{step}</span>
+              {idx < steps.length - 1 && <span class="step-arrow">&rarr;</span>}
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .dossier-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .section-title {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.08em;
+  }
+
+  .arch-pipeline-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .arch-raw-string {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    background-color: var(--color-bg-tertiary);
+    padding: var(--space-3);
+    border: 1px solid var(--border-color-subtle);
+    color: var(--color-text-secondary);
+  }
+
+  .arch-flow-diagram {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .arch-node-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--border-color-strong);
+    padding: 0.3rem 0.6rem;
+  }
+
+  .step-num {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+  }
+
+  .step-text {
+    color: var(--color-text-primary);
+  }
+
+  .step-arrow {
+    color: var(--color-text-muted);
+    margin-left: 0.2rem;
+  }
+</style>

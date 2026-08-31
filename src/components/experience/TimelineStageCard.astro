@@ -1,0 +1,223 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'experience'>;
+  index: number;
+}
+
+const { entry, index } = Astro.props;
+const { data } = entry;
+const stageNum = String(index + 1).padStart(2, '0');
+---
+
+<div class="timeline-stage-card brutalist-box" tabindex="0" role="region" aria-label={`Timeline Stage: ${data.title}`}>
+  <div class="stage-header">
+    <div class="num-badge-wrap">
+      <span class="stage-oversized-num">0{index + 1}</span>
+      <div class="stage-meta">
+        <span class="brutalist-badge">{data.level}</span>
+        <h3 class="stage-title">{data.title}</h3>
+      </div>
+    </div>
+
+    <button class="stage-toggle-btn" type="button" aria-expanded="false">
+      <span class="toggle-text">[ INSPECT CAPABILITIES ]</span>
+      <span class="toggle-arrow">&darr;</span>
+    </button>
+  </div>
+
+  <p class="stage-summary">{data.summary}</p>
+
+  <!-- Expandable Capabilities Drawer -->
+  <div class="stage-expanded-drawer hidden">
+    <div class="drawer-line"></div>
+    <div class="cap-group">
+      <span class="cap-label">// SYSTEM CAPABILITIES & PARADIGMS</span>
+      <ul class="cap-list">
+        {data.capabilities.map((cap: string) => <li>&rarr; {cap}</li>)}
+      </ul>
+    </div>
+
+    {
+      data.evidenceProject && (
+        <div class="evidence-unlock-bar">
+          <span class="evidence-label">VERIFIED PROJECT EVIDENCE:</span>
+          <a href={`/projects/${data.evidenceProject}`} class="evidence-link">
+            [ OPEN MISSION: {data.evidenceProjectName} ] &rarr;
+          </a>
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<script>
+  const initTimelineCards = () => {
+    const cards = document.querySelectorAll('.timeline-stage-card');
+
+    cards.forEach((card) => {
+      const toggleBtn = card.querySelector('.stage-toggle-btn');
+      const drawer = card.querySelector('.stage-expanded-drawer');
+      const arrow = card.querySelector('.toggle-arrow');
+
+      if (!toggleBtn || !drawer) return;
+
+      const toggleDrawer = (e: Event) => {
+        if ((e.target as HTMLElement).closest('a')) return;
+        const isExpanded = drawer.classList.contains('hidden');
+        drawer.classList.toggle('hidden');
+        toggleBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        if (arrow) arrow.textContent = isExpanded ? '↑' : '↓';
+      };
+
+      toggleBtn.addEventListener('click', toggleDrawer);
+
+      card.addEventListener('keydown', (e: Event) => {
+        const keyEvent = e as KeyboardEvent;
+        if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
+          if ((e.target as HTMLElement).closest('a')) return;
+          e.preventDefault();
+          toggleDrawer(e);
+        }
+      });
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', initTimelineCards);
+  document.addEventListener('astro:page-load', initTimelineCards);
+</script>
+
+<style>
+  .timeline-stage-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    background-color: var(--color-bg-secondary);
+    border: var(--border-subtle);
+    padding: var(--space-6);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .timeline-stage-card:hover,
+  .timeline-stage-card:focus-visible {
+    border-color: var(--color-accent-primary);
+    transform: translateX(4px);
+    box-shadow: var(--shadow-hard-accent);
+    outline: none;
+  }
+
+  .stage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .num-badge-wrap {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .stage-oversized-num {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-3xl);
+    font-weight: 900;
+    color: var(--color-accent-primary);
+    line-height: 1;
+  }
+
+  .stage-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .stage-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-xl);
+    font-weight: 900;
+    letter-spacing: -0.01em;
+  }
+
+  .stage-toggle-btn {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-accent-primary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .stage-summary {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .stage-expanded-drawer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .stage-expanded-drawer.hidden {
+    display: none;
+  }
+
+  .drawer-line {
+    border-top: 1px dashed var(--border-color-strong);
+  }
+
+  .cap-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .cap-label {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-accent-primary);
+    letter-spacing: 0.08em;
+  }
+
+  .cap-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+  }
+
+  .evidence-unlock-bar {
+    margin-top: var(--space-2);
+    border-top: 1px solid var(--border-color-subtle);
+    padding-top: var(--space-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+  }
+
+  .evidence-label {
+    color: var(--color-text-muted);
+  }
+
+  .evidence-link {
+    color: var(--color-accent-primary);
+    font-weight: 700;
+  }
+
+  .evidence-link:hover {
+    text-decoration: underline;
+  }
+</style>
