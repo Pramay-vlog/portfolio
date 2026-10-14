@@ -3,6 +3,9 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   canonicalURL?: string;
   type?: string;
 }
@@ -10,7 +13,10 @@ interface Props {
 const {
   title = 'Pramay Usadadiya — AI Software Engineer',
   description = 'Pramay Usadadiya — AI Software Engineer, System Builder, and Researcher. Portfolio featuring grounded RAG architectures, agentic reasoning, and system post-mortems.',
-  image = '/og-preview.svg',
+  image = '/og.png',
+  imageAlt = 'Pramay Usadadiya - AI Software Engineer & Systems Architect Portfolio Preview',
+  imageWidth = 1200,
+  imageHeight = 630,
   canonicalURL = Astro.url.href,
   type = 'website',
 } = Astro.props;
@@ -18,6 +24,17 @@ const {
 const siteName = 'Pramay Usadadiya — AI Software Engineer';
 const fullTitle = title.includes('Pramay Usadadiya') ? title : `${title} | ${siteName}`;
 const fullImageURL = new URL(image, Astro.site || Astro.url.origin).href;
+
+const imageExt = image.split('?')[0].split('.').pop()?.toLowerCase();
+const imageType = imageExt === 'png'
+  ? 'image/png'
+  : imageExt === 'jpg' || imageExt === 'jpeg'
+  ? 'image/jpeg'
+  : imageExt === 'webp'
+  ? 'image/webp'
+  : imageExt === 'gif'
+  ? 'image/gif'
+  : undefined;
 ---
 
 <!-- Primary Meta Tags -->
@@ -26,17 +43,30 @@ const fullImageURL = new URL(image, Astro.site || Astro.url.origin).href;
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalURL} />
 
-<!-- Open Graph / Facebook -->
+<!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
 <meta property="og:type" content={type} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:site_name" content={siteName} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={fullImageURL} />
+<meta property="og:image:secure_url" content={fullImageURL} />
+{imageType && <meta property="og:image:type" content={imageType} />}
+<meta property="og:image:width" content={String(imageWidth)} />
+<meta property="og:image:height" content={String(imageHeight)} />
+<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:locale" content="en_US" />
 
-<!-- Twitter -->
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
 <meta property="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
 <meta property="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={fullTitle} />
 <meta property="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
 <meta property="twitter:description" content={description} />
+<meta name="twitter:image" content={fullImageURL} />
 <meta property="twitter:image" content={fullImageURL} />
+<meta name="twitter:image:alt" content={imageAlt} />
+

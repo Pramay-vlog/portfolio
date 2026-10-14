@@ -10,6 +10,7 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   canonicalURL?: string;
   showNav?: boolean;
   showFooter?: boolean;
@@ -20,6 +21,7 @@ const {
   title,
   description,
   image,
+  imageAlt,
   canonicalURL,
   showNav = true,
   showFooter = true,
@@ -47,7 +49,7 @@ const {
     </script>
 
     <!-- Reusable Production SEO Component -->
-    <SEO title={title} description={description} image={image} canonicalURL={canonicalURL} />
+    <SEO title={title} description={description} image={image} imageAlt={imageAlt} canonicalURL={canonicalURL} />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
