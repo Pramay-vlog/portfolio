@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pramay-os.com/sitemap.xml
+Sitemap: https://ipramay.web.app/sitemap.xml

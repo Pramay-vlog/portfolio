@@ -8,33 +8,53 @@ interface Props {
   imageHeight?: number;
   canonicalURL?: string;
   type?: string;
+  jsonLd?: Record<string, unknown>;
 }
 
 const {
   title = 'Pramay Usadadiya — AI Software Engineer',
-  description = 'Pramay Usadadiya — AI Software Engineer, System Builder, and Researcher. Portfolio featuring grounded RAG architectures, agentic reasoning, and system post-mortems.',
+  description = 'Portfolio of Pramay Usadadiya — AI Software Engineer building reasoning agents, grounded RAG systems, and production backends.',
   image = '/og.png',
-  imageAlt = 'Pramay Usadadiya - AI Software Engineer & Systems Architect Portfolio Preview',
+  imageAlt = 'Pramay Usadadiya — AI Software Engineer Portfolio',
   imageWidth = 1200,
   imageHeight = 630,
   canonicalURL = Astro.url.href,
   type = 'website',
+  jsonLd,
 } = Astro.props;
 
-const siteName = 'Pramay Usadadiya — AI Software Engineer';
-const fullTitle = title.includes('Pramay Usadadiya') ? title : `${title} | ${siteName}`;
+const siteName = 'Pramay Usadadiya';
+// Only append site name if the title doesn't already contain it
+const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
 const fullImageURL = new URL(image, Astro.site || Astro.url.origin).href;
 
 const imageExt = image.split('?')[0].split('.').pop()?.toLowerCase();
-const imageType = imageExt === 'png'
-  ? 'image/png'
-  : imageExt === 'jpg' || imageExt === 'jpeg'
-  ? 'image/jpeg'
-  : imageExt === 'webp'
-  ? 'image/webp'
-  : imageExt === 'gif'
-  ? 'image/gif'
-  : undefined;
+const imageType =
+  imageExt === 'png'
+    ? 'image/png'
+    : imageExt === 'jpg' || imageExt === 'jpeg'
+    ? 'image/jpeg'
+    : imageExt === 'webp'
+    ? 'image/webp'
+    : imageExt === 'gif'
+    ? 'image/gif'
+    : undefined;
+
+// Default JSON-LD for the site (Person schema)
+const defaultJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Pramay Usadadiya',
+  url: Astro.site?.href ?? Astro.url.origin,
+  jobTitle: 'AI Software Engineer',
+  description,
+  image: fullImageURL,
+  sameAs: [
+    'https://github.com/upramay',
+  ],
+};
+
+const structuredData = jsonLd ?? defaultJsonLd;
 ---
 
 <!-- Primary Meta Tags -->
@@ -43,7 +63,7 @@ const imageType = imageExt === 'png'
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalURL} />
 
-<!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
+<!-- Open Graph / Facebook / LinkedIn / WhatsApp / iMessage -->
 <meta property="og:type" content={type} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:site_name" content={siteName} />
@@ -57,16 +77,13 @@ const imageType = imageExt === 'png'
 <meta property="og:image:alt" content={imageAlt} />
 <meta property="og:locale" content="en_US" />
 
-<!-- Twitter / X -->
+<!-- Twitter / X Card -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta property="twitter:card" content="summary_large_image" />
 <meta name="twitter:url" content={canonicalURL} />
-<meta property="twitter:url" content={canonicalURL} />
 <meta name="twitter:title" content={fullTitle} />
-<meta property="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
-<meta property="twitter:description" content={description} />
 <meta name="twitter:image" content={fullImageURL} />
-<meta property="twitter:image" content={fullImageURL} />
 <meta name="twitter:image:alt" content={imageAlt} />
 
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />

@@ -1,0 +1,27 @@
+{
+  "name": "Pramay Usadadiya — AI Software Engineer",
+  "short_name": "Pramay",
+  "description": "Portfolio of Pramay Usadadiya — AI Software Engineer building reasoning agents, grounded RAG systems, and production backends.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbf9f5",
+  "theme_color": "#0047ab",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

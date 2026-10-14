@@ -5,6 +5,6 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://pramay-os.com',
+  site: 'https://ipramay.web.app',
   integrations: [react()]
 });
